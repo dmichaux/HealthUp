@@ -4,7 +4,16 @@ class ApplicationController < ActionController::Base
 
   private
 
-  def admin_user
+  # Before filters
+
+  def require_admin
   	redirect_to root_path unless current_user.admin?
+  end
+
+  def require_login
+  	unless logged_in?
+  		flash[:notice] = "Must be logged in to access content"
+  		redirect_to login_path
+  	end
   end
 end
