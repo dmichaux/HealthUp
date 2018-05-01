@@ -4,11 +4,14 @@
 
 <%= form_for :session, url: login_path do |f| %>
 
-	<%= f.label :email %>
+	<%= f.label 			:email %>
 	<%= f.email_field :email %>
 
-	<%= f.label :password %>
+	<%= f.label 				 :password %>
 	<%= f.password_field :password %>
+
+	<%= f.check_box :remember_me %>	
+	<%= f.label 		:remember_me %>
 
 	<%= f.submit "log in" %>
 <% end %>
