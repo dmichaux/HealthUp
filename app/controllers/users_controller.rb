@@ -17,14 +17,14 @@ class UsersController < ApplicationController
 
 	def create
 		@user = User.new(user_params)
-		# if @user.save
-		# 	UserMailer.activation_email(@user).deliver_now
-		# 	flash[:notice] = "Activation email sent to client"
-		# 	redirect_to current_user
-		# else
-		# 	flash.now[:notice] = "Invalid name or email"
-		# 	render :new
-		# end
+		if @user.save
+			UserMailer.account_activation(@user).deliver_now
+			flash[:notice] = "Account activation email sent to client"
+			redirect_to current_user
+		else
+			flash.now[:notice] = "Invalid name or email"
+			render :new
+		end
 	end
 
 	def edit

@@ -13,7 +13,7 @@ class UserCreationTest < ActionDispatch::IntegrationTest
 		assert_response :redirect
 		assert_no_difference "User.count" do
 			post users_path params: { user: { name: "TestName",
-																				email: "test@example.com" } }
+																				email: "testing@example.com" } }
 		end
 	end
 
@@ -32,7 +32,7 @@ class UserCreationTest < ActionDispatch::IntegrationTest
 		get new_user_path
 		assert_difference "User.count", 1 do
 			post users_path params: { user: { name: "TestName",
-																				email: "test@example.com" } }
+																				email: "testing@example.com" } }
 		end
 	end
 end
