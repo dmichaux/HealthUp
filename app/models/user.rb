@@ -44,6 +44,10 @@ class User < ApplicationRecord
   	BCrypt::Password.new(digest).is_password?(token)
   end
 
+  def send_activation_email
+    UserMailer.account_activation(self).deliver_now
+  end
+
   # Activates a user
   def activate
     update_attribute(:activated, true)
