@@ -4,6 +4,7 @@ class User < ApplicationRecord
 	before_save       :downcase_email
   before_create     :create_activation_digest
   before_validation :create_temp_password, on: :create
+  after_create      :delete_temp_password_digest
 
 	validates :name,  presence: true, length: { within: 3..25 }
 	VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
@@ -56,5 +57,10 @@ class User < ApplicationRecord
 
   def create_temp_password
     self.password = self.password_confirmation = User.new_token
+  end
+
+  # Nullifies (temporary) password_digest for security reasons
+  def delete_temp_password_digest
+    update_attribute(:password_digest, nil)
   end
 end
