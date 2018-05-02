@@ -44,6 +44,11 @@ class User < ApplicationRecord
   	BCrypt::Password.new(digest).is_password?(token)
   end
 
+  # Activates a user
+  def activate
+    update_attribute(:activated, true)
+  end
+
 	private
 
 	def downcase_email
