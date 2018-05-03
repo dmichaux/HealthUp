@@ -59,7 +59,7 @@ class User < ApplicationRecord
 
   def create_reset_digest
     self.pass_reset_token = User.new_token
-    update_attributes(reset_digest:  User.digest(pass_reset_token),
+    update_columns(reset_digest:  User.digest(pass_reset_token),
                       reset_sent_at: Time.zone.now)
   end
 

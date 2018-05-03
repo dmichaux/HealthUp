@@ -39,16 +39,21 @@ class UserCreationTest < ActionDispatch::IntegrationTest
 		assert_equal 1, ActionMailer::Base.deliveries.size
 		user = assigns(:user)
 		assert_not user.activated?
-		# Invalid activation token
+		# Wrong token, correct email
 		get edit_account_activation_path("bad_token_here", email: user.email)
 		assert_not user.activated?
-		# Invalid user email
+		# Correct token, wrong email
 		get edit_account_activation_path(user.activation_token, email: "bad@email.no")
 		assert_not user.activated?
 		# Valid activation
 		get edit_account_activation_path(user.activation_token, email: user.email)
-		assert user.reload.activated?
+		assert_not_equal user.reset_digest, user.reload.reset_digest
+		assert user.activated?
+		# Directed to create new password
+		assert_response :redirect
 		follow_redirect!
-		assert_template "users/show"
+		assert_template "password_resets/edit"
+		assert_select "input[name=email][type=hidden][value=?]", user.email
+		# password_resets_test.rb covers the remaining steps.
 	end
 end
