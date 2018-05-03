@@ -1,3 +1,5 @@
+<% provide :title, "Forgot Password" %>
+
 <h1>Request a password reset</h1>
 
 <%= form_for :password_reset, url: password_resets_path do |f| %>
@@ -5,5 +7,5 @@
 	<%= f.label :email %>
 	<%= f.email_field :email %>
 
-	<%= f.submit %>
+	<%= f.submit "submit" %>
 <% end %>

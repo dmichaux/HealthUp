@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-	attr_accessor :remember_token, :activation_token
+	attr_accessor :remember_token, :activation_token, :pass_reset_token
 
 	before_save       :downcase_email
   before_create     :create_activation_digest
@@ -44,13 +44,28 @@ class User < ApplicationRecord
   	BCrypt::Password.new(digest).is_password?(token)
   end
 
+  # Activates a user
+  def activate
+    update_attribute(:activated, true)
+  end
+
   def send_activation_email
     UserMailer.account_activation(self).deliver_now
   end
 
-  # Activates a user
-  def activate
-    update_attribute(:activated, true)
+  def send_password_reset_email
+    UserMailer.password_reset(self).deliver_now
+  end
+
+  def create_reset_digest
+    self.pass_reset_token = User.new_token
+    update_attributes(reset_digest:  User.digest(pass_reset_token),
+                      reset_sent_at: Time.zone.now)
+  end
+
+  # Returns true if reset has expired
+  def password_reset_expired?
+    reset_sent_at < 2.hours.ago
   end
 
 	private
@@ -68,7 +83,7 @@ class User < ApplicationRecord
     self.password = self.password_confirmation = User.new_token
   end
 
-  # Nullifies (temporary) password_digest for security reasons
+  # Nullifies (temporary) password_digest for security
   def delete_temp_password_digest
     update_attribute(:password_digest, nil)
   end
