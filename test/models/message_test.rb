@@ -19,22 +19,12 @@ class MessageTest < ActiveSupport::TestCase
   	assert_not @message.valid?
   end
 
-  test "subject should be present" do
-  	@message.subject = "   "
-  	assert_not @message.valid?
-  end
-
-  test "subject should not exceed 50 characters" do
-  	@message.subject = "x" * 51
-  	assert_not @message.valid?
-  end
-
   test "body should be present" do
   	@message.body = "    "
   	assert_not @message.valid?
   end
 
-   test "body should not exceed 3000 characters" do
+  test "body should not exceed 3000 characters" do
   	@message.body = "x" * 3001
   	assert_not @message.valid?
   end
