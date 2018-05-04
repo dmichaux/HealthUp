@@ -35,6 +35,12 @@ class UsersController < ApplicationController
 	def destroy
 	end
 
+	def messages
+		@user 		= User.find(params[:id])
+		@sent 		= Message.includes(:to_user).where(from_user_id: @user.id)
+		@received = Message.includes(:from_user).where(to_user_id: @user.id)
+	end
+
 	private
 
 	def user_params
