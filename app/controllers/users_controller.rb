@@ -22,7 +22,6 @@ class UsersController < ApplicationController
 			flash[:notice] = "Account activation email sent to client"
 			redirect_to current_user
 		else
-			flash.now[:notice] = "Invalid name or email"
 			render :new
 		end
 	end
