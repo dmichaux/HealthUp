@@ -39,6 +39,10 @@ class MessageTest < ActiveSupport::TestCase
   	assert_not @message.valid?
   end
 
+  test "opened should default to false" do
+    assert_not @message.opened?
+  end
+
   test "should be ordered with most recent first" do
   	assert_equal messages(:most_recent), Message.first
   end
