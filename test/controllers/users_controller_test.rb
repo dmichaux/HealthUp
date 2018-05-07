@@ -24,4 +24,10 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
 		get users_path
 		assert_response :success
 	end
+
+	test "should redirect messages when logged in as wrong user" do
+		log_in_as @user_admin
+		get messages_user_path(@user)
+		assert_redirected_to root_path
+	end
 end
