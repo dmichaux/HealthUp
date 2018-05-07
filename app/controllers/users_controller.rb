@@ -1,7 +1,8 @@
 class UsersController < ApplicationController
 
 	before_action :require_login
-	before_action :require_admin, except: [:show, :edit, :update]
+	before_action :require_admin, 			 except: [:show, :edit, :update]
+	before_action :require_current_user, only: [:edit, :update, :messages]
 
 	def index
 		@users = User.all
@@ -36,7 +37,6 @@ class UsersController < ApplicationController
 	end
 
 	def messages
-		@user 		= User.find(params[:id])
 		@sent 		= Message.includes(:to_user).where(from_user_id: @user.id)
 		@received = Message.includes(:from_user).where(to_user_id: @user.id)
 	end
@@ -45,5 +45,12 @@ class UsersController < ApplicationController
 
 	def user_params
 		params.require(:user).permit(:name, :email)
+	end
+
+	# Before Filters
+
+	def require_current_user
+		@user = User.find(params[:id])
+		redirect_to root_path unless current_user?(@user)
 	end
 end
