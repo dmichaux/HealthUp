@@ -3,27 +3,23 @@
 one:
   from_user_id: 1
   to_user_id: 2
-  subject: MyString
   body: MyText
   created_at: <%= 15.minutes.ago %>
 
 two:
   from_user_id: 1
   to_user_id: 2
-  subject: MyString
   body: MyText
   created_at: <%= 1.hour.ago %>
 
 three:
   from_user_id: 1
   to_user_id: 2
-  subject: MyString
   body: MyText
   created_at: <%= 12.days.ago %>
 
 most_recent:
   from_user_id: 1
   to_user_id: 2
-  subject: MyString
   body: MyText
   created_at: <%= Time.zone.now %>

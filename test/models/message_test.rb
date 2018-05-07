@@ -6,7 +6,6 @@ class MessageTest < ActiveSupport::TestCase
   	@user_1  = users(:adam)
   	@user_2  = users(:beth)
   	@message = @user_1.sent_messages.build(to_user_id: @user_2.id,
-  																				 subject: 	 "Hello",
   																				 body: 			 "Have a great day!")
   end
 
