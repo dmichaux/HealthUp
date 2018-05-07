@@ -5,3 +5,16 @@
 	Email: <%= @user.email %><br>
 	Admin: <%= @user.admin? %><br>
 </p>
+
+<% if current_user?(@user) %>
+	<%= link_to "My Messages", messages_user_path(@user) %>
+<% else %>
+	<%= form_for @message do |f| %>
+
+		<%= render "shared/error_messages", object: f.object %>
+
+		<%= f.hidden_field :to_user_id, value: @user.id %>
+		<%= f.text_field :body, placeholder: "Send a message to #{@user.name}" %>
+		<%= f.submit "Send" %>
+	<% end %>
+<% end %>
