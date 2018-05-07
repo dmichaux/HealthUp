@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
 
 	before_action :require_login
-	before_action :require_admin, 			 except: [:show, :edit, :update]
+	before_action :require_admin, 			 except: [:show, :edit, :update, :messages]
 	before_action :require_current_user, only: [:edit, :update, :messages]
 
 	def index
@@ -10,6 +10,7 @@ class UsersController < ApplicationController
 
 	def show
 		@user = User.find(params[:id])
+		@message = Message.new
 	end
 
 	def new
