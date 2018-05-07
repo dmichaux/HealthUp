@@ -1,5 +1,7 @@
 class MessagesController < ApplicationController
 
+	before_action :require_login
+
 	def create
 		@message = current_user.sent_messages.build(message_params)
 		@user = User.find(params[:message][:to_user_id])

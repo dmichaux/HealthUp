@@ -14,6 +14,15 @@ class MessagingTest < ActionDispatch::IntegrationTest
 		assert_select "a[href=?]", messages_user_path(@user_1)
 	end
 
+	test "must be logged in to send message" do
+		delete logout_path
+		assert_no_difference "Message.count" do
+			post messages_path, params: { message: { to_user_id: @user_2.id,
+																							 body: "Have a great day!" } }
+		end
+		assert_redirected_to login_path
+	end
+
 	test "invalid message" do
 		get user_path @user_2
 		assert_select "input[value=?]", "Send" 
