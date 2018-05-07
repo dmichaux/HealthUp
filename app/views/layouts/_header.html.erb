@@ -1,8 +1,9 @@
 <header>
 	<div><%= link_to '[logo and name here]', root_path %></div>
 	<nav>
-		<%= link_to 'Home', 	root_path %>
-		<%= link_to 'Help', 	help_path %>
+		<%= link_to 'Home', 	 root_path %>
+		<%= link_to 'Help', 	 help_path %>
+		<%= link_to 'Contact', contact_path %>
 		<% if logged_in? %>
 			Logged in as <%= current_user.name %> | 
 			<%= link_to "My Account", current_user %> | 
