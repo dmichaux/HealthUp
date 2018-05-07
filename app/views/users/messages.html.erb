@@ -4,13 +4,13 @@
 
 <!-- JS will toggle between displaying Inbox and Sent tabs -->
 <h2>Inbox</h2>
-<% if @recieved.any? %>
+<% if @received.any? %>
 	<ol>
 		<% @received.each do |message| %>
 			<li>
 				Received: <%= message.created_at %>
 				From: <%= link_to message.from_user.name, message.from_user %><br>
-				<%= message.body[0..20] %>
+				<%= "#{message.body[0..20]} ..." %>
 				<%= link_to "Read", "#" %> <!-- JS will show message in a View Pane -->
 			</li>
 		<% end %>
@@ -24,7 +24,7 @@
 		<% @sent.each do |message| %>
 			<li>
 				Sent: <%= message.created_at %><br>
-				<%= message.body[0..20] %>
+				<%= message.body[0..20] + "..." %>
 				<%= link_to "Read", "#" %> <!-- JS will show message in View Pane -->
 			</li>
 		<% end %>
@@ -32,8 +32,8 @@
 <% else %>
 <% end %>
 
-<!-- View Pane -->
 <div>
+	View Pane
 	<!-- JS will show selected message -->
 	<%= link_to "Reply", "#" %> <!-- if selected message is from Inbox -->
 </div>
