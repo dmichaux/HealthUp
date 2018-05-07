@@ -5,4 +5,8 @@ class StaticPagesController < ApplicationController
 
 	def help
 	end
+
+	def contact
+		@message = Message.new
+	end
 end
