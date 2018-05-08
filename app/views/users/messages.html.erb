@@ -2,7 +2,8 @@
 
 <h1>Your Messages</h1>
 
-<!-- JS will toggle between displaying Inbox and Sent tabs -->
+<!-- JS will toggle between displaying Inbox and Sent tabs
+	(and Contact Submissions for admin) -->
 <h2>Inbox</h2>
 <% if @received.any? %>
 	<ol>
@@ -30,6 +31,23 @@
 		<% end %>
 	</ol>
 <% else %>
+<% end %>
+
+<% if @user.admin? %>
+	<h2>Contact Form Submissions</h2>
+	<% if @outside.any? %>
+		<ol>
+			<% @outside.each do |message| %>
+				<li>
+					Received: <%= message.created_at %>
+					From: <%= "#{message.name}, #{message.email}" %><br>
+					<%= "#{message.body[0..20]} ..." %>
+					<%= link_to "Read", "#" %> <!-- JS will show message in a View Pane -->
+				</li>
+			<% end %>
+		</ol>
+	<% else %>
+	<% end %>
 <% end %>
 
 <div>
