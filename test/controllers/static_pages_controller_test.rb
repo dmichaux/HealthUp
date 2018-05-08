@@ -17,10 +17,4 @@ class StaticPagesControllerTest < ActionDispatch::IntegrationTest
 		assert_response :success
 		assert_select "title", "Help | #{@site_name}"
 	end
-
-	test "should get contact" do
-		get contact_path
-		assert_response :success
-		assert_select "title", "Contact | #{@site_name}"
-	end
 end
