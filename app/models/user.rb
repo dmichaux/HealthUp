@@ -1,8 +1,9 @@
 class User < ApplicationRecord
 	attr_accessor :remember_token, :activation_token, :pass_reset_token
 
-  has_many :sent_messages,     foreign_key: :from_user_id, class_name: "Message"
-  has_many :received_messages, foreign_key: :to_user_id,   class_name: "Message"
+  has_many   :sent_messages,     foreign_key: :from_user_id, class_name: "Message"
+  has_many   :received_messages, foreign_key: :to_user_id,   class_name: "Message"
+  belongs_to :cohort, optional: true
 
 	before_save       :downcase_email
   before_create     :create_activation_digest
