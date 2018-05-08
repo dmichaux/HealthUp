@@ -40,6 +40,7 @@ class UsersController < ApplicationController
 	def messages
 		@sent 		= Message.includes(:to_user).where(from_user_id: @user.id)
 		@received = Message.includes(:from_user).where(to_user_id: @user.id)
+		@outside  = OutsideMessage.where(to_admin_id: @user.id) if @user.admin?
 	end
 
 	private
