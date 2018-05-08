@@ -1,5 +1,8 @@
 class CohortsController < ApplicationController
 
+	before_action :require_login
+	before_action :require_admin, except: :show
+
 	def index
 		@cohorts = Cohort.all
 	end
