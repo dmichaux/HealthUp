@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180508182755) do
+ActiveRecord::Schema.define(version: 20180508192346) do
 
   create_table "cohorts", force: :cascade do |t|
     t.string "name"
@@ -53,6 +53,8 @@ ActiveRecord::Schema.define(version: 20180508182755) do
     t.boolean "activated", default: false
     t.string "reset_digest"
     t.datetime "reset_sent_at"
+    t.integer "cohort_id"
+    t.index ["cohort_id"], name: "index_users_on_cohort_id"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
