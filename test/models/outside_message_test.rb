@@ -43,6 +43,18 @@ class OutsideMessageTest < ActiveSupport::TestCase
     end
   end
 
+  test "name should be present" do
+    @message.name = ""
+    assert_not @message.valid?
+  end
+
+  test "name should be 3 - 25 characters long" do
+    @message.name = "XX"
+    assert_not @message.valid?
+    @message.name = ("X" * 26)
+    assert_not @message.valid?
+  end
+
 	test "body should be present" do
 		@message.body = ""
 		assert_not @message.valid?
