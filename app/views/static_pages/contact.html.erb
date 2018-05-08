@@ -1,0 +1,19 @@
+<% provide :title, "Contact" %>
+
+<h1>Contact Us</h1>
+
+<%= form_for @message do |f| %>
+
+	<%= render "shared/error_messages", object: f.object %>
+
+	<%= label_tag :name, "Your Name" %><br>
+	<%= text_field_tag :name %><br>
+
+	<%= label_tag :email, "Your email" %><small> (required)</small><br>
+	<%= email_field_tag :email %><br><br>
+
+	<%= f.label :body, "Message" %><small> (required)</small><br>
+	<%= f.text_area :body, placeholder: "Your message here..." %>
+
+	<%= f.submit "Send" %>
+<% end %>
