@@ -16,6 +16,13 @@ class CohortsController < ApplicationController
 	end
 
 	def create
+		@cohort = Cohort.new(cohort_params)
+		if @cohort.save
+			flash[:notice] = "Cohort created"
+			redirect_to @cohort
+		else
+			render :new
+		end
 	end
 
 	def edit
@@ -28,6 +35,12 @@ class CohortsController < ApplicationController
 	end
 
 	private
+
+	def cohort_params
+		params.require(:cohort).permit(:name, :description, :start_date, :end_date)
+	end
+
+	#Before Filters
 
 	def require_participant_or_admin
 		@cohort = Cohort.find(params[:id])
