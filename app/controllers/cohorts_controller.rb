@@ -1,8 +1,8 @@
 class CohortsController < ApplicationController
 
 	before_action :require_login
-	before_action :require_admin, 			except: :show
-	before_action :require_participant, only: 	:show
+	before_action :require_admin, 							 except: :show
+	before_action :require_participant_or_admin, only: 	 :show
 
 	def index
 		@cohorts = Cohort.all
@@ -29,9 +29,10 @@ class CohortsController < ApplicationController
 
 	private
 
-	def require_participant
+	def require_participant_or_admin
 		@cohort = Cohort.find(params[:id])
-		unless current_user.cohort == @cohort || current_user.admin?
+		participant = (current_user.cohort == @cohort) ? true : false
+		unless participant || current_user.admin?
 			redirect_to root_path
 		end
 	end
