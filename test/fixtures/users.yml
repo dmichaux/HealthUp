@@ -6,6 +6,7 @@ adam:
   password_digest: <%= User.digest('password') %>
   activated: true
   admin: true
+  cohort_id: nil
 
 beth:
   name: Beth Test
@@ -13,3 +14,4 @@ beth:
   password_digest: <%= User.digest('password') %>
   activated: true
   admin: false
+  cohort_id: nil
