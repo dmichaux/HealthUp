@@ -1,1 +1,14 @@
 <h1>Cohort index</h1>
+
+<% if @cohorts.any? %>
+	<ul>
+		<% @cohorts.each do |cohort| %>
+			<li>
+				Name: <%= link_to cohort.name, cohort %><br>
+				Description: <%= cohort.description %><br>
+				Starts: <%= cohort.starts %><br>
+				Ends: <%= cohort.ends %>
+			</li>
+		<% end %>
+	</ul>
+<% end %>
