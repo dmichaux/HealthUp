@@ -13,8 +13,13 @@ Rails.application.routes.draw do
 			get :messages
 		end
 	end
+	resources :cohorts do
+		member do
+			get 	:select_users
+			patch :add_users
+		end
+	end
 	resources :account_activations, only: [:edit]
 	resources :password_resets,		  only: [:new, :create, :edit, :update]
 	resources :messages,						only: :create
-	resources :cohorts
 end
