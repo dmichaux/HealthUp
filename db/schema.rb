@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180508192346) do
+ActiveRecord::Schema.define(version: 20180510154026) do
 
   create_table "cohorts", force: :cascade do |t|
     t.string "name"
@@ -54,6 +54,7 @@ ActiveRecord::Schema.define(version: 20180508192346) do
     t.string "reset_digest"
     t.datetime "reset_sent_at"
     t.integer "cohort_id"
+    t.datetime "activated_at"
     t.index ["cohort_id"], name: "index_users_on_cohort_id"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
