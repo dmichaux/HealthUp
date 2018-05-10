@@ -3,6 +3,8 @@
 <p>
 	Name: <%= @user.name %><br>
 	Email: <%= @user.email %><br>
+	Cohort: <%= @user.cohort ? (link_to @user.cohort.name, @user.cohort) :
+																	"unassigned" %><br>
 	Admin: <%= @user.admin? %><br>
 </p>
 
@@ -14,7 +16,21 @@
 		<%= render "shared/error_messages", object: f.object %>
 
 		<%= f.hidden_field :to_user_id, value: @user.id %>
-		<%= f.text_field :body, placeholder: "Send a message to #{@user.name}" %>
+		<%= f.text_area :body, placeholder: "Send a message to #{@user.name}" %>
 		<%= f.submit "Send" %>
 	<% end %>
+<% end %>
+
+<!-- Admin viewing own page -->
+<% if current_user.admin? && current_user?(@user) %>
+	<hr>
+	Admin-Only
+	<div>
+		<ul>
+			<li><%= link_to "See Client List", 	 users_path %></li>
+			<li><%= link_to "Invite New Client", new_user_path %></li>
+			<li><%= link_to "Create New Cohort", new_cohort_path %></li>
+		</ul>
+	</div>
+	<hr>
 <% end %>

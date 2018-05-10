@@ -6,3 +6,16 @@
 	<li>Starts: <%= @cohort.starts %></li>
 	<li>Ends: <%= @cohort.ends %></li>
 </ul>
+
+<div>
+	Participants:
+	<% if @cohort.users.any? %>
+		<ol>
+			<% @cohort.users.each do |user| %>
+				<li><%= link_to user.name, user %></li>
+			<% end %>
+		</ol>
+	<% else %>
+		none
+	<% end %>
+</div>
