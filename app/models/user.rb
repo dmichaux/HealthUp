@@ -5,6 +5,8 @@ class User < ApplicationRecord
   has_many   :received_messages, foreign_key: :to_user_id,   class_name: "Message"
   belongs_to :cohort, optional: true
 
+  default_scope -> { order(:name) }
+
 	before_save       :downcase_email
   before_create     :create_activation_digest
   before_validation :create_temp_password, on: :create
