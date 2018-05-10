@@ -1,0 +1,19 @@
+<h1>Add Users to <%= @cohort.name %></h1>
+
+Add Unassigned Clients:
+<% if @unassigned.any? %>
+	<%= form_for :assigned, url: add_users_cohort_path, method: :patch do |f| %>
+
+		<% @unassigned.each do |user| %>
+
+			<%= f.check_box :user_ids, { multiple: true }, user.id, false %>
+			<%= f.label :user_ids, "#{user.name}" %><br>
+		<% end %>
+
+		<%= f.submit "Assign" %>
+	<% end %>
+<% else%>
+	none available
+<% end %>
+
+<br><%= link_to "<< back to cohort", cohort_path(@cohort) %>
