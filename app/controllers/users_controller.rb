@@ -5,7 +5,8 @@ class UsersController < ApplicationController
 	before_action :require_current_user, only: [:edit, :update, :messages]
 
 	def index
-		@users = User.all
+		@active 		 = User.includes(:cohort).where(activated: true)
+		@unactivated = User.where(activated: false)
 	end
 
 	def show
