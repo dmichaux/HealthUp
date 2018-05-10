@@ -46,8 +46,10 @@ class UserCreationTest < ActionDispatch::IntegrationTest
 		get edit_account_activation_path(user.activation_token, email: "bad@email.no")
 		assert_not user.activated?
 		# Valid activation
+		assert_nil user.activated_at
 		get edit_account_activation_path(user.activation_token, email: user.email)
 		assert_not_equal user.reset_digest, user.reload.reset_digest
+		assert_not_nil user.activated_at
 		assert user.activated?
 		# Directed to create new password
 		assert_response :redirect
