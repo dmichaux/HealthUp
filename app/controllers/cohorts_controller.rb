@@ -43,7 +43,7 @@ class CohortsController < ApplicationController
 	#Before Filters
 
 	def require_participant_or_admin
-		@cohort = Cohort.find(params[:id])
+		@cohort = Cohort.includes(:users).find(params[:id])
 		participant = (current_user.cohort == @cohort) ? true : false
 		unless participant || current_user.admin?
 			redirect_to root_path
