@@ -3,6 +3,7 @@ class CohortsController < ApplicationController
 	before_action :require_login
 	before_action :require_admin, 							 except: :show
 	before_action :require_participant_or_admin, only: 	 :show
+	before_action :forbid_user_reassignment,		 only: 	 :add_users
 
 	def index
 		@cohorts = Cohort.all
@@ -35,18 +36,14 @@ class CohortsController < ApplicationController
 	end
 
 	def select_users
-		@cohort = Cohort.find(params[:id])
+		@cohort 		= Cohort.find(params[:id])
 		@unassigned = User.where(activated: true).where(cohort_id: nil)
 	end
 
 	def add_users
-		cohort = Cohort.find(params[:id])
-		ids = params[:assigned][:user_ids]
-		ids.each do |id|
-			User.find(id).update_attribute(:cohort_id, cohort.id)
-		end
-		flash[:notice] = "Clients added"
-		redirect_to cohort_path cohort
+		@users.each { |user| user.update_attribute(:cohort_id, @cohort.id) }
+		flash[:notice] = "Client(s) added to cohort"
+		redirect_to cohort_path @cohort
 	end
 
 	private
@@ -63,5 +60,11 @@ class CohortsController < ApplicationController
 		unless participant || current_user.admin?
 			redirect_to root_path
 		end
+	end
+
+	def forbid_user_reassignment
+		@cohort = Cohort.find(params[:id])
+		@users  = params[:assigned][:user_ids].map { |id| User.find(id) }
+		@users.each { |user| redirect_to root_path if user.cohort_id }
 	end
 end
