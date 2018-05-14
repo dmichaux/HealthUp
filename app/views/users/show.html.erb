@@ -1,38 +1,49 @@
 <h1>User Account Profile</h1>
 
-<p>
-	Name: <%= @user.name %><br>
-	Email: <%= @user.email %><br>
-	Cohort: <%= @user.cohort ? (link_to @user.cohort.name, @user.cohort) :
-																	"unassigned" %><br>
-	Admin: <%= @user.admin? %><br>
-</p>
+<div class="container">
+	<div class="row">
+		<div class="col">
+			<p>
+				Name: <%= @user.name %><br>
+				Email: <%= @user.email %><br>
+				Cohort: <%= @user.cohort ? (link_to @user.cohort.name, @user.cohort) :
+																				"unassigned" %><br>
+				Admin: <%= @user.admin? %><br>
+			</p>
 
-<% if current_user?(@user) %>
-	<%= link_to "My Messages", messages_user_path(@user) %>
-<% else %>
-	<%= form_for @message do |f| %>
+			<% if current_user?(@user) %>
+				<%= link_to "My Messages", messages_user_path(@user) %>
+			<% else %>
+				<%= form_for @message do |f| %>
 
-		<%= render "shared/error_messages", object: f.object %>
+					<%= render "shared/error_messages", object: f.object %>
 
-		<%= f.hidden_field :to_user_id, value: @user.id %>
-		<%= f.text_area :body, class: "form-control",
-													 placeholder: "Send a message to #{@user.name}" %><br>
-		<%= f.submit "Send", class: "btn" %>
-	<% end %>
-<% end %>
+					<%= f.hidden_field :to_user_id, value: @user.id %>
+					<%= f.text_area :body, class: "form-control",
+																 placeholder: "Send a message to #{@user.name}" %><br>
+					<%= f.submit "Send", class: "btn" %>
+				<% end %>
+			<% end %>
 
-<!-- Admin viewing own page -->
-<% if current_user.admin? && current_user?(@user) %>
-	<hr>
-	Admin-Only
-	<div>
-		<ul>
-			<li><%= link_to "See Client List", 	 users_path %></li>
-			<li><%= link_to "Invite New Client", new_user_path %></li><br>
-			<li><%= link_to "See Cohort List", 	 cohorts_path %></li>
-			<li><%= link_to "Create New Cohort", new_cohort_path %></li>
-		</ul>
+			<!-- Admin viewing own page -->
+			<% if current_user.admin? && current_user?(@user) %>
+				<hr>
+				Admin-Only
+				<div>
+					<ul>
+						<li><%= link_to "See Client List", 	 users_path %></li>
+						<li><%= link_to "Invite New Client", new_user_path %></li><br>
+						<li><%= link_to "See Cohort List", 	 cohorts_path %></li>
+						<li><%= link_to "Create New Cohort", new_cohort_path %></li>
+					</ul>
+				</div>
+				<hr>
+			<% end %>
+		</div>
+		<div class="col-1"></div>
+		<div class="col border border-secondary rounded">
+			[other useful space]
+		</div>
 	</div>
-	<hr>
-<% end %>
+</div>
+

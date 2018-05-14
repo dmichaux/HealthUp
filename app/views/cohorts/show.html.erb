@@ -1,25 +1,36 @@
 <h1>Cohort Page</h1>
 
-<ul>
-	<li>Name: <%= @cohort.name %></li>
-	<li>Description: <%= @cohort.description %></li>
-	<li>Starts: <%= @cohort.starts %></li>
-	<li>Ends: <%= @cohort.ends %></li>
-	<% if current_user.admin? %>
-		<li><%= link_to "Add Participants", select_users_cohort_path(@cohort) %></li>
-	<% end %>
-</ul>
-
-<div>
-	Participants:
-	<% if @cohort.users.any? %>
-		<div class="list-group">
-			<% @cohort.users.each do |user| %>
-				<%= link_to user.name, user,
-										class: "list-group-item list-group-item-dark list-group-item-action" %>
-			<% end %>
+<div class="container">
+	<div class="row">
+		<div class="col">
+			<ul>
+				<li>Name: <%= @cohort.name %></li>
+				<li>Description: <%= @cohort.description %></li>
+				<li>Starts: <%= @cohort.starts %></li>
+				<li>Ends: <%= @cohort.ends %></li>
+				<% if current_user.admin? %>
+					<li><%= link_to "Add Participants", select_users_cohort_path(@cohort) %></li>
+				<% end %>
+			</ul>
+			<div>
+				Participants:
+				<% if @cohort.users.any? %>
+					<div class="list-group">
+						<% @cohort.users.each do |user| %>
+							<%= link_to user.name, user,
+													class: "list-group-item list-group-item-dark list-group-item-action" %>
+						<% end %>
+					</div>
+				<% else %>
+					none
+				<% end %>
+			</div>
 		</div>
-	<% else %>
-		none
-	<% end %>
+		<div class="col-1"></div>
+		<div class="col border border-secondary rounded">
+			[forum here]<br>[other useful space]
+		</div>
+	</div>
 </div>
+
+
