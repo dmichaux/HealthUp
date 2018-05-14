@@ -1,9 +1,9 @@
 <% if object.errors.any? %>
-	<div id="error_explanation">
+	<div class="text-danger" ">
 		Please try again. <%= pluralize object.errors.count, "error" %> to fix:
-		<ul>
+		<ul class="list-group">
 			<% object.errors.full_messages.each do |message| %>
-				<li><%= message %></li>
+				<li class="list-group-item alert alert-danger"><%= message %></li>
 			<% end %>
 		</ul>
 	</div>

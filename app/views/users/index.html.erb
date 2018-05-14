@@ -2,9 +2,9 @@
 
 <h2>Active Clients</h2>
 <% if @active.any? %>
-	<ol>
+	<ol class="list-group">
 		<% @active.each do |user| %>
-			<li>
+			<li class="list-group-item list-group-item-dark">
 				<%= link_to user.name, user %><br>
 				Cohort: <%= user.cohort ? (link_to user.cohort.name, user.cohort) :
 																	"unassigned" %><br>
@@ -15,7 +15,7 @@
 				<% else %>
 					- Admin Status -
 				<% end %>
-			</li><br>
+			</li>
 		<% end %>
 	</ol>
 <% else %>
@@ -24,16 +24,16 @@
 
 <h2>Unactived Clients</h2>
 <% if @unactivated.any? %>
-	<ol>
+	<ol class="list-group">
 		<% @unactivated.each do |user| %>
-			<li>
+			<li class="list-group-item list-group-item-dark">
 				<%= link_to user.name, user %><br>
 				Invited on <%= user.created_at %><br>
 				<% if !user.admin? %> 
 					<%=link_to "delete client", user, method: :delete,
 																						data: { confirm: "Are you sure?" } %>
 				<% end %>
-			</li><br>
+			</li>
 		<% end %>
 	</ol>
 <% else %>

@@ -9,13 +9,14 @@
 	<small>* all fields are required *</small><br>
 
 	<%= f.label :name, "Your Name" %><br>
-	<%= f.text_field :name %><br>
+	<%= f.text_field :name, class: "form-control" %><br>
 
 	<%= f.label :email, "Your email" %><br>
-	<%= f.email_field :email %><br><br>
+	<%= f.email_field :email, class: "form-control" %><br>
 
 	<%= f.label :body, "Message" %><br>
-	<%= f.text_area :body, placeholder: "Your message here..." %>
+	<%= f.text_area :body, class: "form-control",
+												 placeholder: "Your message here..." %><br>
 
-	<%= f.submit "Send" %>
+	<%= f.submit "Send", class: "btn" %>
 <% end %>

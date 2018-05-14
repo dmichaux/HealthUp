@@ -5,14 +5,14 @@
 <%= form_for :session, url: login_path do |f| %>
 
 	<%= f.label 			:email %>
-	<%= f.email_field :email %>
+	<%= f.email_field :email, class: "form-control" %>
 
 	<%= f.label 				 :password %>
 	<%= link_to "forgot password", new_password_reset_path %>
-	<%= f.password_field :password %>
+	<%= f.password_field :password, class: "form-control" %>
 
 	<%= f.check_box :remember_me %>	
-	<%= f.label 		:remember_me %>
+	<%= f.label 		:remember_me %><br>
 
-	<%= f.submit "log in" %>
+	<%= f.submit "log in", class: "btn" %>
 <% end %>

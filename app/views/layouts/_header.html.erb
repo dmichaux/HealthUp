@@ -1,15 +1,24 @@
 <header>
-	<div><%= link_to '[logo and name here]', root_path %></div>
-	<nav>
-		<%= link_to 'Home', 	 root_path %>
-		<%= link_to 'Help', 	 help_path %>
-		<%= link_to 'Contact', contact_path %>
-		<% if logged_in? %>
-			Logged in as <%= current_user.name %> | 
-			<%= link_to "My Account", current_user %> | 
-			<%= link_to 'Log Out', logout_path, method: :delete %>
-		<% else %>
-			<%= link_to 'Log In', login_path %>
-		<% end %>
+	<nav class="navbar bg-dark navbar-dark navbar-expand-sm">
+		<div class="container">
+			<div class="col">
+				<%= link_to '[logo and name here]', root_path, class: "navbar-brand" %>
+			</div>
+			<div class="col">
+				<ul class="navbar-nav justify-content-end">
+					<li class="nav-item"><%= link_to 'Home', 	 root_path, class: "nav-link" %></li>
+					<li class="nav-item"><%= link_to 'Help', 	 help_path, class: "nav-link" %></li>
+					<li class="nav-item"><%= link_to 'Contact', contact_path, class: "nav-link" %></li>
+					<% if logged_in? %>
+						<li class="nav-item"><%= link_to "My Account", current_user,
+																		 class: "nav-link" %></li>
+						<li class="nav-item"><%= link_to 'Log Out', logout_path,
+																		 method: :delete, class: "nav-link" %></li>
+					<% else %>
+						<li class="nav-item"><%= link_to 'Log In', login_path, class: "nav-link" %></li>
+					<% end %>
+				</ul>
+			</div>
+		</div>
 	</nav>
 </header>

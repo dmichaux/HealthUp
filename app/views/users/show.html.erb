@@ -16,8 +16,9 @@
 		<%= render "shared/error_messages", object: f.object %>
 
 		<%= f.hidden_field :to_user_id, value: @user.id %>
-		<%= f.text_area :body, placeholder: "Send a message to #{@user.name}" %>
-		<%= f.submit "Send" %>
+		<%= f.text_area :body, class: "form-control",
+													 placeholder: "Send a message to #{@user.name}" %><br>
+		<%= f.submit "Send", class: "btn" %>
 	<% end %>
 <% end %>
 

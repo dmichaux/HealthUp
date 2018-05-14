@@ -10,11 +10,12 @@
 <div>
 	Participants:
 	<% if @cohort.users.any? %>
-		<ol>
+		<div class="list-group">
 			<% @cohort.users.each do |user| %>
-				<li><%= link_to user.name, user %></li>
+				<%= link_to user.name, user,
+										class: "list-group-item list-group-item-dark list-group-item-action" %>
 			<% end %>
-		</ol>
+		</div>
 	<% else %>
 		none
 	<% end %>

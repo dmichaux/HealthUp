@@ -2,56 +2,99 @@
 
 <h1>Your Messages</h1>
 
-<!-- JS will toggle between displaying Inbox and Sent tabs
-	(and Contact Submissions for admin) -->
-<h2>Inbox</h2>
-<% if @received.any? %>
-	<ol>
-		<% @received.each do |message| %>
-			<li>
-				Received: <%= message.created_at %>
-				From: <%= link_to message.from_user.name, message.from_user %><br>
-				<%= "#{message.body[0..20]} ..." %>
-				<%= link_to "Read", "#" %> <!-- JS will show message in a View Pane -->
-			</li>
-		<% end %>
-	</ol>
-<% else %>
-<% end %>
-
-<h2>Sent</h2>
-<% if @sent.any? %>
-	<ol>
-		<% @sent.each do |message| %>
-			<li>
-				Sent: <%= message.created_at %><br>
-				<%= message.body[0..20] + "..." %>
-				<%= link_to "Read", "#" %> <!-- JS will show message in View Pane -->
-			</li>
-		<% end %>
-	</ol>
-<% else %>
-<% end %>
-
-<% if @user.admin? %>
-	<h2>Contact Form Submissions</h2>
-	<% if @outside.any? %>
-		<ol>
-			<% @outside.each do |message| %>
-				<li>
-					Received: <%= message.created_at %>
-					From: <%= "#{message.name}, #{message.email}" %><br>
-					<%= "#{message.body[0..20]} ..." %>
-					<%= link_to "Read", "#" %> <!-- JS will show message in a View Pane -->
-				</li>
-			<% end %>
-		</ol>
-	<% else %>
-	<% end %>
-<% end %>
-
-<div>
-	View Pane
-	<!-- JS will show selected message -->
-	<%= link_to "Reply", "#" %> <!-- if selected message is from Inbox -->
+<div id="accordion">
+  <div class="card">
+    <div class="card-header">
+      <a class="card-link" data-toggle="collapse" href="#collapseOne">
+        Inbox
+      </a>
+    </div>
+    <div id="collapseOne" class="collapse" data-parent="#accordion">
+      <div class="card-body">
+        <% if @received.any? %>
+					<ol class="list-group">
+						<% @received.each_with_index do |message, n| %>
+							<li class="list-group-item">
+								Received: <%= message.created_at %>
+								From: <%= link_to message.from_user.name, message.from_user %><br>
+								<div>
+									<%= "#{message.body[0..20]}" %>
+									<%= content_tag :span, message.body[21..-1],
+																	class: "collapse", id: "inbox-#{n}" %><br>
+									<%= content_tag :button, "Expand/Collapse", 
+																	class: "btn btn-sm", data: { toggle: "collapse",
+																															 target: "#inbox-#{n}" } %>
+								</div>
+							</li>
+						<% end %>
+					</ol>
+				<% else %>
+					No messages
+				<% end %>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header">
+      <a class="collapsed card-link" data-toggle="collapse" href="#collapseTwo">
+      Sent
+    </a>
+    </div>
+    <div id="collapseTwo" class="collapse" data-parent="#accordion">
+      <div class="card-body">
+        <% if @sent.any? %>
+					<ol class="list-group">
+						<% @sent.each_with_index do |message, n| %>
+							<li class="list-group-item list-group-item-dark">
+								Sent: <%= message.created_at %><br>
+								<div>
+									<%= "#{message.body[0..20]}" %>
+									<%= content_tag :span, message.body[21..-1],
+																	class: "collapse", id: "sent-#{n}" %><br>
+									<%= content_tag :button, "Expand/Collapse", 
+																	class: "btn btn-sm", data: { toggle: "collapse",
+																															 target: "#sent-#{n}" } %>
+								</div>
+							</li>
+						<% end %>
+					</ol>
+				<% else %>
+					No Messages
+				<% end %>
+      </div>
+    </div>
+  </div>
+  <% if @user.admin? %>
+	  <div class="card">
+	    <div class="card-header">
+	      <a class="collapsed card-link" data-toggle="collapse" href="#collapseThree">
+	        Contact Submissions
+	      </a>
+	    </div>
+	    <div id="collapseThree" class="collapse" data-parent="#accordion">
+	      <div class="card-body">
+	        <% if @outside.any? %>
+						<ol class="list-group">
+							<% @outside.each_with_index do |message, n| %>
+								<li class="list-group-item list-group-item-dark">
+									Received: <%= message.created_at %>
+									From: <%= "#{message.name}, #{message.email}" %><br>
+									<div>
+										<%= "#{message.body[0..20]}" %>
+										<%= content_tag :span, message.body[21..-1],
+																		class: "collapse", id: "contact-#{n}" %><br>
+										<%= content_tag :button, "Expand/Collapse", 
+																		class: "btn btn-sm", data: { toggle: "collapse",
+																																 target: "#contact-#{n}" } %>
+								</div>
+								</li>
+							<% end %>
+						</ol>
+					<% else %>
+						No Messages
+					<% end %>
+	      </div>
+	    </div>
+	  </div>
+	 <% end %>
 </div>
