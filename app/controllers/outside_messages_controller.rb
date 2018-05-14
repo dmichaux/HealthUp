@@ -9,7 +9,7 @@ class OutsideMessagesController < ApplicationController
 		@outside_message = OutsideMessage.new(outside_message_params
 																				 .merge(to_admin_id))
 		if @outside_message.save
-			flash[:notice] = "Your message was sent"
+			flash[:success] = "Your message was sent"
 			redirect_to root_path
 		else
 			render :new

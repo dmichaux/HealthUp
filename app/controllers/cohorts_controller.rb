@@ -19,7 +19,7 @@ class CohortsController < ApplicationController
 	def create
 		@cohort = Cohort.new(cohort_params)
 		if @cohort.save
-			flash[:notice] = "Cohort created"
+			flash[:success] = "Cohort created"
 			redirect_to @cohort
 		else
 			render :new
@@ -42,7 +42,7 @@ class CohortsController < ApplicationController
 
 	def add_users
 		@users.each { |user| user.update_attribute(:cohort_id, @cohort.id) }
-		flash[:notice] = "Client(s) added to cohort"
+		flash[:success] = "Client(s) added to cohort"
 		redirect_to cohort_path @cohort
 	end
 
