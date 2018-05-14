@@ -31,7 +31,7 @@ class MessagingTest < ActionDispatch::IntegrationTest
 																							 body: "" } }
 		end
 		assert_template "users/show"
-		assert_select "div#error_explanation"
+		assert_select "div.text-danger"
 	end
 
 	test "valid message submission" do

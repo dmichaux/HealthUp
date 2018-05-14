@@ -37,7 +37,7 @@ class CohortCreationTest < ActionDispatch::IntegrationTest
   																					 description: "Test group" } }
   	end
   	assert_template "cohorts/new"
-		assert_select "div#error_explanation"
+		assert_select "div.text-danger"
   end
 
   test "invalid cohort description" do
@@ -46,7 +46,7 @@ class CohortCreationTest < ActionDispatch::IntegrationTest
   																					 description: "" } }
   	end
   	assert_template "cohorts/new"
-		assert_select "div#error_explanation"
+		assert_select "div.text-danger"
   end
 
   test "succesful cohort creation" do

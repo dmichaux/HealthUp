@@ -9,7 +9,7 @@ class ContactFormTest < ActionDispatch::IntegrationTest
 																											body:  "Hello"}}
 		end
 		assert_template "outside_messages/new"
-		assert_select "div#error_explanation"
+		assert_select "div.text-danger"
 	end
 
 	test "invalid body" do
@@ -19,7 +19,7 @@ class ContactFormTest < ActionDispatch::IntegrationTest
 																											body:  ""}}
 		end
 		assert_template "outside_messages/new"
-		assert_select "div#error_explanation"
+		assert_select "div.text-danger"
 	end
 
 	test "valid message submission" do
