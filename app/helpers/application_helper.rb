@@ -9,4 +9,8 @@ module ApplicationHelper
 			"#{page_title} | #{base_title}"
 		end
 	end
+
+  def format_time(time)
+  	time.localtime.strftime('%A, %-m/%-d/%Y %I:%M %p')
+  end
 end
