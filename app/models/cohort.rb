@@ -6,10 +6,18 @@ class Cohort < ApplicationRecord
 	validates :description, presence: true, length: { within: 3..500 }
 
 	def starts
-		start_date || "unspecified"
+		if start_date
+			start_date.strftime('%A, %-m/%-d/%Y')
+		else
+			"unspecified"
+		end
 	end
 
 	def ends
-		end_date || "unspecified"
+		if end_date
+			end_date.strftime('%A, %-m/%-d/%Y')
+		else
+			"unspecified"
+		end
 	end
 end
