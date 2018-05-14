@@ -29,7 +29,8 @@ lorem = "Lorem ipsum dolor sit amet, consectetur adipisicing elit,
 	# Cohorts
 
 	Cohort.create(name: "Cohort #{x}",
-								description: "Description for Cohort #{x}: #{lorem}")
+								description: "Description for Cohort #{x}: #{lorem}",
+								start_date: Date.today, end_date: (Date.today + 8.weeks))
 
 	# Messages
 
