@@ -15,7 +15,7 @@
 					<ol class="list-group">
 						<% @received.each_with_index do |message, n| %>
 							<li class="list-group-item list-group-item-dark">
-								Received: <%= message.created_at %>
+								Received: <%= format_time(message.created_at) %><br>
 								From: <%= link_to message.from_user.name, message.from_user %><br>
 								<div>
 									<%= "#{message.body[0..20]}" %>
@@ -46,7 +46,8 @@
 					<ol class="list-group">
 						<% @sent.each_with_index do |message, n| %>
 							<li class="list-group-item list-group-item-dark">
-								Sent: <%= message.created_at %><br>
+								Sent: <%= format_time(message.created_at) %><br>
+								To: <%= link_to message.to_user.name, message.to_user %><br>
 								<div>
 									<%= "#{message.body[0..20]}" %>
 									<%= content_tag :span, message.body[21..-1],
@@ -77,7 +78,7 @@
 						<ol class="list-group">
 							<% @outside.each_with_index do |message, n| %>
 								<li class="list-group-item list-group-item-dark">
-									Received: <%= message.created_at %>
+									Received: <%= format_time(message.created_at) %><br>
 									From: <%= "#{message.name}, #{message.email}" %><br>
 									<div>
 										<%= "#{message.body[0..20]}" %>

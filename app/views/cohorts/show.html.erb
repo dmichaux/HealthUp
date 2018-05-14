@@ -5,6 +5,9 @@
 	<li>Description: <%= @cohort.description %></li>
 	<li>Starts: <%= @cohort.starts %></li>
 	<li>Ends: <%= @cohort.ends %></li>
+	<% if current_user.admin? %>
+		<li><%= link_to "Add Participants", select_users_cohort_path(@cohort) %></li>
+	<% end %>
 </ul>
 
 <div>
@@ -19,5 +22,4 @@
 	<% else %>
 		none
 	<% end %>
-	<br><%= link_to "Add Participants", select_users_cohort_path(@cohort) %>
 </div>
