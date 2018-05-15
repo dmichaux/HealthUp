@@ -48,7 +48,7 @@ class MessagingTest < ActionDispatch::IntegrationTest
 		assert @user_1.admin?
 		get messages_user_path @user_1
 		assert_template "users/messages"
-		assert_match (/Contact Form Submissions/), response.body
+		assert_match (/Contact Submissions/), response.body
 	end
 
 	test "messages page should not show outside messages if not admin" do
@@ -56,6 +56,6 @@ class MessagingTest < ActionDispatch::IntegrationTest
 		assert_not @user_1.admin?
 		get messages_user_path @user_1
 		assert_template "users/messages"
-		assert_no_match (/Contact Form Submissions/), response.body
+		assert_no_match (/Contact Submissions/), response.body
 	end
 end
