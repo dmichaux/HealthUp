@@ -6,8 +6,8 @@
 			</div>
 			<div class="col">
 				<ul class="navbar-nav justify-content-end">
-					<li class="nav-item"><%= link_to 'Home', 	 root_path, class: "nav-link" %></li>
-					<li class="nav-item"><%= link_to 'Help', 	 help_path, class: "nav-link" %></li>
+					<li class="nav-item"><%= link_to 'Home', 		root_path, 		class: "nav-link" %></li>
+					<li class="nav-item"><%= link_to 'About', 	about_path, 	class: "nav-link" %></li>
 					<li class="nav-item"><%= link_to 'Contact', contact_path, class: "nav-link" %></li>
 					<% if logged_in? %>
 						<li class="nav-item"><%= link_to "My Account", current_user,
