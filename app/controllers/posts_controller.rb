@@ -4,12 +4,14 @@ class PostsController < ApplicationController
 	before_action :require_admin
 
 	def create
+		@cohort = Cohort.find(params[:post][:cohort_id])
 		@post = Post.new(post_params)
 		if @post.save
 			flash[:success] = "Post has been created"
-			redirect_to cohort_path params[:cohort_id]
+			redirect_to @cohort
 		else
-			render :new
+			flash.now[:warning] = "Error with post. Expand 'New Post' form for details."
+			render 'cohorts/show'
 		end
 	end
 
