@@ -29,7 +29,6 @@
 		<div class="col-1"></div>
 		<div class="col border border-secondary rounded">
 			<% if @cohort.posts.any? %>
-
 				<ol class="list-group">
 					<% @cohort.posts.each_with_index do |post, n| %>
 						<li class="list-group-item list-group-item-dark">
@@ -38,15 +37,43 @@
 																href: "#",
 																data: { toggle: "collapse",
 																				target: "#post-#{n}" } %>
-								<%= content_tag :div, post.body,
-																class: "collapse", id: "post-#{n}" %><br>
-								Posted by <%= link_to post.author.name, post.author %>
-								<%= format_time(post.created_at) %>
+								<div>
+									Posted by <%= link_to post.author.name, post.author %>
+									<%= format_time(post.created_at) %>
+									<div class="collapse" id="post-<%= n %>">
+										<%= post.body %>
+										<div>
+											<%= form_for @comment do |f| %>
+
+												<%= render 'shared/error_messages', object: f.object %>
+
+												<%= f.hidden_field :post_id,	 value: post.id %>
+												<%= f.hidden_field :author_id, value: current_user.id %>
+
+												<%= f.text_area :body, class: "form-control",
+																							 placeholder: "comment on this post" %>
+
+												<%= f.submit "comment", class: "btn, btn-sm" %>
+											<% end %>
+										</div>
+										<% if post.comments.any? %>
+											Comments:
+											<ol class="list-group">
+												<% post.comments.each do |comment| %>
+													<li class="list-group-item list-group-item-dark">
+														<%= comment.body %><br>
+														<%= link_to comment.author.name, comment.author %>
+														<%= format_time(comment.created_at) %>
+													</li>
+												<% end %>
+											</ol>
+										<% end %>
+									</div>
+								</div>
 							</div>
 						</li>
 					<% end %>
 				</ol>
-
 			<% end %>
 			<% if current_user.admin %>
 				<br><a href="#" data-toggle="collapse" data-target="#new-post-form">New Post open/close</a>
