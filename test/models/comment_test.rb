@@ -29,6 +29,11 @@ class CommentTest < ActiveSupport::TestCase
 		assert_not @comment.valid?
 	end
 
+	test "post_id should be present" do
+		@comment.post_id = nil
+		assert_not @comment.valid?
+	end
+
 	test "should be ordered with most recent first" do
   	assert_equal comments(:most_recent), Comment.first
   end

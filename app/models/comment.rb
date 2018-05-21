@@ -7,4 +7,5 @@ class Comment < ApplicationRecord
 
   validates :body, 			presence: true, length: { within: 3..500 }
   validates :author_id, presence: true
+  validates :post_id, 	presence: true
 end
