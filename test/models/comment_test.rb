@@ -11,4 +11,25 @@ class CommentTest < ActiveSupport::TestCase
   test "should be valid" do
   	assert @comment.valid?
   end
+
+  test "body must be present" do
+		@comment.body = "  "
+		assert_not @comment.valid?
+	end
+
+	test "body must be within 3 and 500 characters" do
+		@comment.body = "xx"
+		assert_not @comment.valid?
+		@comment.body = "x" * 501
+		assert_not @comment.valid?
+	end
+
+	test "author_id should be present" do
+		@comment.author_id = nil
+		assert_not @comment.valid?
+	end
+
+	test "should be ordered with most recent first" do
+  	assert_equal comments(:most_recent), Comment.first
+  end
 end
