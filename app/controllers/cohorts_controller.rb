@@ -11,6 +11,7 @@ class CohortsController < ApplicationController
 
 	def show
 		@post = Post.new
+		@comment = Comment.new
 	end
 
 	def new
@@ -56,7 +57,7 @@ class CohortsController < ApplicationController
 	#Before Filters
 
 	def require_participant_or_admin
-		@cohort = Cohort.includes(:users, :posts).find(params[:id])
+		@cohort = Cohort.includes(:users, posts: [ :author, comments: :author ]).find(params[:id])
 		participant = (current_user.cohort == @cohort) ? true : false
 		unless participant || current_user.admin?
 			redirect_to root_path
