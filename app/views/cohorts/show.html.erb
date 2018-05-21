@@ -29,6 +29,24 @@
 		<div class="col-1"></div>
 		<div class="col border border-secondary rounded">
 			[forum here]<br>[other useful space]
+			<% if current_user.admin %>
+				<a href="#" data-toggle="collapse" data-target="#new-post-form">New Post open/close</a>
+				<%= form_for @post, html: { class: "collapse", id: "new-post-form" } do |f| %>
+
+					<%= render 'shared/error_messages', object: f.object %>
+
+					<%= f.hidden_field :cohort_id, value: @cohort.id %>
+					<%= f.hidden_field :author_id, value: current_user.id %>
+
+					<%= f.label :title %>
+					<%= f.text_area :title, class: "form-control" %>
+
+					<%= f.label :body %>
+					<%= f.text_area :body, class: "form-control" %>
+
+					<%= f.submit "Post", class: "btn" %>
+				<% end %>
+			<% end %>
 		</div>
 	</div>
 </div>
