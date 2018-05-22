@@ -19,7 +19,7 @@ class UsersController < ApplicationController
 	end
 
 	def create
-		@user = User.new(user_params)
+		@user = User.new(user_params_create)
 		if @user.save
 			@user.send_activation_email
 			flash[:success] = "Account activation email sent to client"
@@ -33,6 +33,12 @@ class UsersController < ApplicationController
 	end
 
 	def update
+		if @user.update_attributes(user_params_update)
+			flash[:success] = "Information updated"
+			redirect_to @user
+		else
+			render :edit
+		end
 	end
 
 	def destroy
@@ -49,8 +55,13 @@ class UsersController < ApplicationController
 
 	private
 
-	def user_params
+	# User creates password after activation
+	def user_params_create
 		params.require(:user).permit(:name, :email)
+	end
+
+	def user_params_update
+		params.require(:user).permit(:name, :email, :password, :password_confirmation)
 	end
 
 	# Before Filters
