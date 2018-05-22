@@ -7,8 +7,13 @@
 				Name: <%= link_to cohort.name, cohort %><br>
 				Description: <%= cohort.description %><br>
 				Starts: <%= cohort.starts %><br>
-				Ends: <%= cohort.ends %>
+				Ends: <%= cohort.ends %><br>
+				<%= link_to "delete", delete @cohort, method: :delete,
+																							data: { confirm: "Are you sure?"} %>
 			</li>
 		<% end %>
 	</ul>
+<% else %>
+	None<br>
+	<%= link_to "New Cohort", new_cohort_path %>
 <% end %>

@@ -10,7 +10,11 @@
 				<li>Ends: <%= @cohort.ends %></li>
 				<% if current_user.admin? %>
 					<li><%= link_to "Add Participants", select_users_cohort_path(@cohort) %></li>
-					<li><%= link_to "Edit Cohort", edit_cohort_path(@cohort) %></li>
+					<li>
+						<%= link_to "Edit Cohort", edit_cohort_path(@cohort) %> | 
+						<%= link_to "Delete Cohort", delete @cohort, method: :delete,
+																												 data: { confirm: "Are you sure?"} %>
+					</li>
 				<% end %>
 			</ul>
 			<div>
