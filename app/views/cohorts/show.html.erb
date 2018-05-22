@@ -40,6 +40,9 @@
 								<div>
 									Posted by <%= link_to post.author.name, post.author %>
 									<%= format_time(post.created_at) %>
+									<% if current_user.admin? %>
+										<br><%= link_to "edit post", edit_post_path(post) %>
+									<% end %>
 									<div class="collapse" id="post-<%= n %>">
 										<%= post.body %>
 										<div>
