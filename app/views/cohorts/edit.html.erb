@@ -1,0 +1,24 @@
+<% provide :title, "Edit Cohort" %>
+
+<h1>Edit Cohort</h1>
+
+<%= form_for @cohort do |f| %>
+
+	<%= render "shared/error_messages", object: f.object %>
+	
+	<%= f.label :name %><br>
+	<%= f.text_field :name, class: "form-control" %><br>
+
+	<%= f.label :description %><br>
+	<%= f.text_area :description, class: "form-control" %><br>
+
+	<small>Leave dates blank to designate as "unspecified"</small><br>
+
+	<%= f.label :start_date %>
+	<%= f.date_select :start_date, include_blank: true, class: "form-control" %><br>
+
+	<%= f.label :end_date %>
+	<%= f.date_select :end_date, include_blank: true, class: "form-control" %><br>
+
+	<%= f.submit "Update Cohort", class: "btn" %>
+<% end %>
