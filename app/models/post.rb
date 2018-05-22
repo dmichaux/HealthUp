@@ -2,7 +2,7 @@ class Post < ApplicationRecord
   
   belongs_to :cohort
   belongs_to :author, class_name: "User"
-  has_many	 :comments
+  has_many	 :comments, dependent: :destroy
 
   default_scope -> { order(created_at: :desc) }
 

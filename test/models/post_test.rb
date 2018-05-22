@@ -50,4 +50,13 @@ class PostTest < ActiveSupport::TestCase
 	test "should be ordered with most recent first" do
   	assert_equal posts(:most_recent), Post.first
   end
+
+  test "associated comments should be destroyed" do
+  	@post.save
+  	@comment = @post.comments.create(body: "test comment.",
+  																	 author_id: @user.id)
+  	assert_difference "Comment.count", -1 do
+  		@post.destroy
+  	end
+  end
 end
