@@ -31,6 +31,11 @@ class PostsController < ApplicationController
 	end
 
 	def destroy
+		@post 	= Post.find(params[:id])
+		@cohort = Cohort.find(@post.cohort_id)
+		@post.destroy
+		flash[:success] = "Post deleted"
+		redirect_to @cohort
 	end
 
 	private
