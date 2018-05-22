@@ -5,7 +5,7 @@ class PostsController < ApplicationController
 
 	def create
 		@cohort = Cohort.find(params[:post][:cohort_id])
-		@post = Post.new(post_params)
+		@post = Post.new(post_params_create)
 		if @post.save
 			flash[:success] = "Post has been created"
 			redirect_to @cohort
@@ -16,9 +16,18 @@ class PostsController < ApplicationController
 	end
 
 	def edit
+		@post = Post.find(params[:id])
 	end
 
 	def update
+		@post = Post.find(params[:id])
+		if @post.update_attributes(post_params_update)
+			flash[:success] = "Post updated"
+			@cohort = Cohort.find(@post.cohort_id)
+			redirect_to @cohort
+		else
+			render :edit
+		end
 	end
 
 	def destroy
@@ -26,7 +35,12 @@ class PostsController < ApplicationController
 
 	private
 
-	def post_params
+	def post_params_create
 		params.require(:post).permit(:title, :body, :cohort_id, :author_id)
+	end
+
+	# Updates must not alter cohort_id or author_id
+	def post_params_update
+		params.require(:post).permit(:title, :body)
 	end
 end
