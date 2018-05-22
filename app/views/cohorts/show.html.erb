@@ -42,7 +42,9 @@
 									Posted by <%= link_to post.author.name, post.author %>
 									<%= format_time(post.created_at) %>
 									<% if current_user.admin? %>
-										<br><%= link_to "edit post", edit_post_path(post) %>
+										<br><%= link_to "edit", edit_post_path(post) %> | 
+										<%= link_to "delete", post, method: :delete,
+																								data: { confirm: "Are you sure?" } %>
 									<% end %>
 									<div class="collapse" id="post-<%= n %>">
 										<%= post.body %>
