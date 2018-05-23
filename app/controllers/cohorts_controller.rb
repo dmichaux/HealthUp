@@ -43,6 +43,9 @@ class CohortsController < ApplicationController
 	end
 
 	def destroy
+		Cohort.find(params[:id]).destroy
+		flash[:success] = "Cohort deleted"
+		redirect_to cohorts_path
 	end
 
 	def select_users
