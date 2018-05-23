@@ -3,12 +3,13 @@ require 'test_helper'
 class CohortTest < ActiveSupport::TestCase
   
   def setup
-  	@cohort = Cohort.new(name: "Test",
-  											 description: "A trial group of volunteer users")
+    @user = users(:adam)
+    @cohort = Cohort.new(name: "Test",
+                         description: "A trial group of volunteer users")
   end
 
   test "should be valid" do
-  	assert @cohort.valid?
+    assert @cohort.valid?
   end
 
   test "name should be present" do
@@ -33,5 +34,23 @@ class CohortTest < ActiveSupport::TestCase
     assert_not @cohort.valid?
     @cohort.description = ("X" * 501)
     assert_not @cohort.valid?
+  end
+
+  test "associated posts should be destroyed" do
+    @cohort.save
+    @post = @cohort.posts.create(title: "Test", body: "Test body",
+                                 author_id: @user.id)
+    assert_equal @cohort, @post.cohort
+    assert_difference "Post.count", -1 do
+      @cohort.destroy
+    end
+  end
+
+  test "associated users' foreign key should be nullified" do
+    @cohort.save
+    @user.update_column(:cohort_id, @cohort.id)
+    assert_equal @cohort, @user.cohort
+    @cohort.destroy
+    assert_nil @user.reload.cohort
   end
 end
