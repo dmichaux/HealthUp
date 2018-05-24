@@ -8,6 +8,7 @@ adam:
   activated_at: <%= Time.zone.now %>
   admin: true
   cohort_id: nil
+  deleted_at: nil
 
 beth:
   name: Beth Test
@@ -17,3 +18,4 @@ beth:
   activated_at: <%= Time.zone.now %>
   admin: false
   cohort_id: nil
+  deleted_at: nil

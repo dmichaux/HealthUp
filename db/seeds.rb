@@ -1,9 +1,8 @@
 # Delete previous seeds in Development
 if Rails.env.development?
-	User.delete_all
-	Cohort.delete_all
-	Message.delete_all
-	OutsideMessage.delete_all
+	User.destroy_all
+	Cohort.destroy_all
+	OutsideMessage.destroy_all
 end
 
 

@@ -10,14 +10,31 @@
 																	"unassigned" %><br>
 				Active Since: <%= format_time(user.activated_at) %><br>
 				<% if !user.admin? %> 
-					<%=link_to "delete client", user, method: :delete,
-																						data: { confirm: "Are you sure?" } %>
+					<%=link_to "soft delete client", soft_delete_user_path(user),
+										 method: :patch, data: { confirm: "Mark user for deletion?" } %>
 				<% end %>
 			</li>
 		<% end %>
 	</ol>
 <% else %>
 	<p>No active clients at this time.</p>
+<% end %>
+
+<h2>Deleted Clients</h2>
+<% if @soft_deleted.any? %>
+	<%= link_to "Permanently Delete All", destroy_soft_deleted_users_path, method: :delete,
+							data: { confirm: "Permanently erase all information for deleted clients?" } %>
+	<ol class="list-group">
+		<% @soft_deleted.each do |user| %>
+			<li class="list-group-item list-group-item-dark">
+				<%= user.name %> was deleted <%= format_time(user.deleted_at) %><br>
+				<%= link_to "permanently delete", user, method: :delete,
+										data: { confirm: "Permanently erase all information for this client?" } %> | 
+				<%= link_to "reactivate", reactivate_user_path(user), method: :patch,
+										data: { confirm: "Send client a reactivation email?" } %>
+			</li>
+		<% end %>
+	</ol>
 <% end %>
 
 <h2>Unactived Clients</h2>

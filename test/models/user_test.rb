@@ -84,4 +84,37 @@ class UserTest < ActiveSupport::TestCase
   test "authenticated? should return false if remember digest is nil" do
   	assert_not @user.authenticated?(:remember, nil)
   end
+
+  test "soft delete" do
+  	@user.save
+  	assert_nil @user.deleted_at
+  	@user.soft_delete
+  	assert_not_nil @user.reload.deleted_at
+    assert_nil @user.cohort_id
+    assert_nil @user.password_digest
+    assert_nil @user.remember_digest
+    assert_not @user.activated?
+  end
+
+  test "associated sent and received messages should be destroyed" do
+  	@user.save
+  	user2 	 = users(:adam)
+  	sent 		 = @user.sent_messages.create(body: "Hello there.", 		to_user_id: user2.id)
+  	received = @user.received_messages.create(body: "Hello there.", from_user_id: user2.id)
+  	assert_equal sent, 		 @user.sent_messages.first
+  	assert_equal received, @user.received_messages.first
+  	assert_difference "Message.count", -2 do
+  		@user.destroy
+  	end
+  end
+
+  test "associated comments should be destroyed" do
+  	@user.save
+  	post 		= posts(:one)
+  	comment = post.comments.create(body: "Great post!", author_id: @user.id)
+  	assert_equal comment, @user.comments.first
+  	assert_difference "Comment.count", -1 do
+  		@user.destroy
+  	end
+  end
 end

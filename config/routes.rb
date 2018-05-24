@@ -10,15 +10,20 @@ Rails.application.routes.draw do
 
 	resources :users do
 		member do
-			get :messages
+			get 	:messages
+			patch :soft_delete
+			patch :reactivate
 		end
+		delete  :destroy_soft_deleted, on: :collection
 	end
+
 	resources :cohorts do
 		member do
 			get 	:select_users
 			patch :add_users
 		end
 	end
+
 	resources :account_activations, only: 	[:edit]
 	resources :password_resets,		  only: 	[:new, :create, :edit, :update]
 	resources :messages,						only: 	:create

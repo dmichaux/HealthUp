@@ -2,12 +2,14 @@ class User < ApplicationRecord
 	attr_accessor :remember_token, :activation_token, :pass_reset_token
 
   belongs_to :cohort, optional: true
-  has_many   :sent_messages,     foreign_key: :from_user_id, class_name: "Message"
-  has_many   :received_messages, foreign_key: :to_user_id,   class_name: "Message"
+  has_many   :sent_messages,     foreign_key: :from_user_id, class_name: "Message", dependent: :destroy
+  has_many   :received_messages, foreign_key: :to_user_id,   class_name: "Message", dependent: :destroy
   has_many   :posts,             foreign_key: :author_id
-  has_many   :comments,          foreign_key: :author_id
+  has_many   :comments,          foreign_key: :author_id, dependent: :destroy
 
-  default_scope -> { order(:name) }
+  default_scope           -> { order(:name) }
+  scope :only_deleted,    -> { where.not(deleted_at: nil) }
+  scope :without_deleted, -> { where(deleted_at: nil) }
 
 	before_save       :downcase_email
   before_create     :create_activation_digest
@@ -75,6 +77,23 @@ class User < ApplicationRecord
   # Returns true if reset has expired
   def password_reset_expired?
     reset_sent_at < 2.hours.ago
+  end
+
+  # Marks a user as deleted without deleting the record
+  def soft_delete
+    update_columns(deleted_at:      Time.zone.now,
+                   cohort_id:       nil,
+                   password_digest: nil,
+                   remember_digest: nil,
+                   activated:       false)
+  end
+
+  # Unmarks user as soft deleted and restarts activation process
+  def reactivate
+    self.activation_token = User.new_token
+    update_columns(deleted_at: nil,
+                   activation_digest: User.digest(activation_token))
+    send_activation_email
   end
 
 	private
