@@ -75,9 +75,13 @@ class UsersController < ApplicationController
 	end
 
 	def messages
-		@sent 		= Message.includes(:to_user).where(from_user_id: @user.id)
-		@received = Message.includes(:from_user).where(to_user_id: @user.id)
-		@outside  = OutsideMessage.where(to_admin_id: @user.id) if @user.admin?
+		@sent 							= Message.includes(:to_user).where(from_user_id: @user.id)
+		@received 					= Message.includes(:from_user).where(to_user_id: @user.id)
+		@received_unopened  = @received.where(opened: false).count
+		if @user.admin?
+			@outside 					= OutsideMessage.where(to_admin_id: @user.id)
+			@outside_unopened = @outside.where(opened: false).count
+		end
 	end
 
 	private
