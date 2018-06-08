@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class CohortAddUsersTest < ActionDispatch::IntegrationTest
+class CohortAddRemoveUsersTest < ActionDispatch::IntegrationTest
   
   def setup
   	@cohort = Cohort.create(name: "Test", description: "Test group.")
@@ -61,5 +61,24 @@ class CohortAddUsersTest < ActionDispatch::IntegrationTest
   	assert_redirected_to cohort_path @cohort
   	follow_redirect!
   	assert_match (/Participants[\s\S]+#{@user.name}/), response.body
+  end
+
+  test "must be admin to remove user" do
+    @cohort.users << @user
+    @user.toggle!(:admin)
+    assert_not @user.admin
+    assert_no_difference "@cohort.users.count" do
+      patch unassign_cohort_user_path(@user)
+    end
+    assert_redirected_to root_path
+  end
+
+  test "successfully remove user from cohort" do
+    @cohort.users << @user
+    assert_difference "@cohort.users.count", -1 do
+      patch unassign_cohort_user_path(@user)
+    end
+    assert_response :redirect
+    assert_not_equal @cohort, @user.reload.cohort
   end
 end
