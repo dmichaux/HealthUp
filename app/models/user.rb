@@ -79,6 +79,11 @@ class User < ApplicationRecord
     reset_sent_at < 2.hours.ago
   end
 
+  # Removes user from cohort
+  def unassign_cohort
+    update_attribute(:cohort_id, nil)
+  end
+
   # Marks a user as deleted without deleting the record
   def soft_delete
     update_columns(deleted_at:      Time.zone.now,

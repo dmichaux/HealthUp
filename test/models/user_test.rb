@@ -85,6 +85,13 @@ class UserTest < ActiveSupport::TestCase
   	assert_not @user.authenticated?(:remember, nil)
   end
 
+  test "unassign_cohort" do
+    @user.cohort_id = 1
+    assert_not_nil @user.cohort_id
+    @user.unassign_cohort
+    assert_nil @user.cohort_id
+  end
+
   test "soft delete" do
   	@user.save
   	assert_nil @user.deleted_at
