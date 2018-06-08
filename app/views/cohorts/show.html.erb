@@ -20,12 +20,17 @@
 			<div>
 				Participants:
 				<% if @cohort.users.any? %>
-					<div class="list-group">
+					<ol class="list-group">
 						<% @cohort.users.each do |user| %>
-							<%= link_to user.name, user,
-													class: "list-group-item list-group-item-dark list-group-item-action" %>
+							<li class="list-group-item list-group-item-dark">
+								<%= link_to user.name, user %> 
+								<% if current_user.admin? %>
+									| <%= link_to "remove from cohort", unassign_cohort_user_path(user),
+																											method: :patch %>
+								<% end %>
+							</li>
 						<% end %>
-					</div>
+					</ol>
 				<% else %>
 					none
 				<% end %>
