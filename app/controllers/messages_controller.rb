@@ -13,6 +13,14 @@ class MessagesController < ApplicationController
 		end
 	end
 
+	def open
+		Message.find(params[:id]).open_message
+		respond_to do |format|
+			format.html { redirect_to current_user }
+			format.js
+		end
+	end
+
 	private
 
 	def message_params
