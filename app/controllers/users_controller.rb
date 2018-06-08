@@ -2,8 +2,8 @@ class UsersController < ApplicationController
 
 	before_action :require_login
 	before_action :require_admin, 			 		 except: [:show, :edit, :update, :messages]
-	before_action :require_current_user, 		 only: [:edit, :update, :messages]
-	before_action :require_deactivated_user, only: :reactivate
+	before_action :require_current_user, 		 only: 	 [:edit, :update, :messages]
+	before_action :require_deactivated_user, only: 	 :reactivate
 
 	def index
 		@active 		  = User.includes(:cohort).where(activated: true)
@@ -12,7 +12,7 @@ class UsersController < ApplicationController
 	end
 
 	def show
-		@user = User.find(params[:id])
+		@user 	 = User.find(params[:id])
 		@message = Message.new
 	end
 
@@ -41,6 +41,13 @@ class UsersController < ApplicationController
 		else
 			render :edit
 		end
+	end
+
+	def unassign_cohort
+		@user = User.find(params[:id])
+		@user.unassign_cohort
+		flash[:success] = "User removed from cohort"
+		redirect_back fallback_location: @user
 	end
 
 	def soft_delete
