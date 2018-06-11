@@ -12,8 +12,11 @@
 			</p>
 
 			<% if current_user?(@user) %>
-				<%= link_to "My Messages", messages_user_path(@user) %><br>
-				<%= link_to "Edit My Information", edit_user_path(@user) %>
+				<%= link_to "My Messages", messages_user_path(@user) %> 
+				<% if @new_messages > 0 %>
+      		<span class="badge badge-primary"><%= @new_messages %> New</span>
+      	<% end %>
+				<br><%= link_to "Edit My Information", edit_user_path(@user) %>
 			<% else %>
 				<%= form_for @message do |f| %>
 
