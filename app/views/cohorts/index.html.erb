@@ -8,8 +8,9 @@
 				Description: <%= cohort.description %><br>
 				Starts: <%= cohort.starts %><br>
 				Ends: <%= cohort.ends %><br>
-				<%= link_to "delete", @cohort, method: :delete,
-																			 data: { confirm: "Are you sure?"} %>
+				<%= button_to "delete", cohort,
+											method: :delete, class: "btn-dark btn-sm",
+											data: { confirm: "Are you sure?"} %>
 			</li>
 		<% end %>
 	</ul>

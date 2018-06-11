@@ -11,9 +11,11 @@
 				<% if current_user.admin? %>
 					<li><%= link_to "Add Participants", select_users_cohort_path(@cohort) %></li>
 					<li>
-						<%= link_to "Edit Cohort", edit_cohort_path(@cohort) %> | 
-						<%= link_to "Delete Cohort", @cohort, method: :delete,
-																									data: { confirm: "Are you sure?"} %>
+						<%= button_to "Edit Cohort", edit_cohort_path(@cohort),
+													method: :get, class: "btn-secondary btn-sm" %>
+						<%= button_to "Delete Cohort", @cohort,
+													method: :delete, class: "btn-dark btn-sm",
+													data: { confirm: "Are you sure?"} %>
 					</li>
 				<% end %>
 			</ul>
@@ -23,10 +25,10 @@
 					<ol class="list-group">
 						<% @cohort.users.each do |user| %>
 							<li class="list-group-item list-group-item-dark">
-								<%= link_to user.name, user %> 
+								<%= link_to user.name, user %>
 								<% if current_user.admin? %>
-									| <%= link_to "remove from cohort", unassign_cohort_user_path(user),
-																											method: :patch %>
+									<%= button_to "remove from cohort", unassign_cohort_user_path(user),
+																method: :patch, class: "btn-secondary btn-sm" %>
 								<% end %>
 							</li>
 						<% end %>
@@ -40,22 +42,24 @@
 		<div class="col border border-secondary rounded">
 			<% if @cohort.posts.any? %>
 				<ol class="list-group">
-					<% @cohort.posts.each_with_index do |post, n| %>
+					<% @cohort.posts.each do |post| %>
 						<li class="list-group-item list-group-item-dark">
 							<div>
 								<%= content_tag :a, post.title,
 																href: "#",
 																data: { toggle: "collapse",
-																				target: "#post-#{n}" } %>
+																				target: "#post-#{post.id}" } %>
 								<div>
 									Posted by <%= link_to post.author.name, post.author %>
 									<%= format_time(post.created_at) %>
 									<% if current_user.admin? %>
-										<br><%= link_to "edit", edit_post_path(post) %> | 
-										<%= link_to "delete", post, method: :delete,
-																								data: { confirm: "Are you sure?" } %>
+										<br><%= button_to "edit", edit_post_path(post),
+																			method: :get, class: "btn-secondary btn-sm" %>
+										<%= button_to "delete", post,
+																	method: :delete, class: "btn-dark btn-sm",
+																	data: { confirm: "Are you sure?" } %>
 									<% end %>
-									<div class="collapse" id="post-<%= n %>">
+									<div class="collapse" id="post-<%= post.id %>">
 										<%= post.body %>
 										<div>
 											<%= form_for @comment do |f| %>
@@ -80,9 +84,9 @@
 														<%= link_to comment.author.name, comment.author %>
 														<%= format_time(comment.created_at) %>
 														<% if (comment.author == current_user) || current_user.admin? %>
-															<br><%= link_to "delete", comment,
-																												method: :delete,
-																												data: { confirm: "delete comment?"} %>
+															<br><%= button_to "delete", comment,
+																								method: :delete, class: "btn-dark btn-sm",
+																								data: { confirm: "delete comment?"} %>
 														<% end %>
 													</li>
 												<% end %>
