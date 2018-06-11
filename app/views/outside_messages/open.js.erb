@@ -1,0 +1,7 @@
+<% if @unopened_count > 0 %>
+	$("#contact-badge").html("<%= @unopened_count %> New");
+<% else %>
+	$("#contact-badge").hide();
+<% end %>
+
+$("#contact-badge-<%= @message.id %>").hide();

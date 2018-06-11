@@ -1,5 +1,8 @@
 class OutsideMessagesController < ApplicationController
 
+	before_action :require_login, only: :open
+	before_action :require_admin, only: :open
+
 	def new
 		@outside_message = OutsideMessage.new
 	end
@@ -13,6 +16,16 @@ class OutsideMessagesController < ApplicationController
 			redirect_to root_path
 		else
 			render :new
+		end
+	end
+
+	def open
+		@message = OutsideMessage.find(params[:id])
+		@message.open_message if !@message.opened?
+		@unopened_count = OutsideMessage.where(opened: false).count
+		respond_to do |format|
+			format.html { redirect_to current_user }
+			format.js
 		end
 	end
 

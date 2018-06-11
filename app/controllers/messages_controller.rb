@@ -14,7 +14,9 @@ class MessagesController < ApplicationController
 	end
 
 	def open
-		Message.find(params[:id]).open_message
+		@message = Message.find(params[:id])
+		@message.open_message if !@message.opened?
+		@unopened_count = Message.where(to_user_id: @message.to_user_id).where(opened: false).count
 		respond_to do |format|
 			format.html { redirect_to current_user }
 			format.js
