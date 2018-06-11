@@ -8,4 +8,8 @@ class OutsideMessage < ApplicationRecord
 	validates :name, presence: true, length: { within: 3..25 }
 	validates :body, presence: true, length: { within: 1..2000 }
 	validates :to_admin_id, presence: true
+
+	def open_message
+		toggle!(:opened)
+	end
 end
