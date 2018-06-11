@@ -2,8 +2,6 @@ Rails.application.routes.draw do
 
 	root 	 'static_pages#home'
 	get  	 '/about',   to: 'static_pages#about'
-	get		 '/contact', to: 'outside_messages#new'
-	post	 '/contact', to: 'outside_messages#create'
 	get  	 '/login',   to: 'sessions#new'
 	post 	 '/login',   to: 'sessions#create'
 	delete '/logout',  to: 'sessions#destroy'
@@ -25,11 +23,16 @@ Rails.application.routes.draw do
 		end
 	end
 
-	resources :account_activations, only: 	[:edit]
-	resources :password_resets,		  only: 	[:new, :create, :edit, :update]
-	resources :messages,						only: 	:create do
+	resources :messages, only: :create do
 		patch 	:open, on: :member
 	end
+
+	resources :outside_messages, only: [:new, :create] do
+		patch		:open, on: :member
+	end
+
+	resources :account_activations, only: 	[:edit]
+	resources :password_resets,		  only: 	[:new, :create, :edit, :update]
 	resources :posts,								except: [:index, :show, :new]
 	resources :comments,						only: 	[:create, :destroy]
 end
