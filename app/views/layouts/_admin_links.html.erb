@@ -1,0 +1,10 @@
+<li class="nav-item dropdown">
+	<a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">Administration</a>
+	<div class="dropdown-menu">
+			<%= link_to "See Client List", 	 users_path, class: "dropdown-item" %>
+			<%= link_to "Invite New Client", new_user_path, class: "dropdown-item" %>
+			<div class="dropdown-divider"></div>
+			<%= link_to "See Cohort List", 	 cohorts_path, class: "dropdown-item" %>
+			<%= link_to "Create New Cohort", new_cohort_path, class: "dropdown-item" %>
+	</div>
+</li>
