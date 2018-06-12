@@ -19,9 +19,9 @@
 						<% @received.each do |message| %>
 							<li class="list-group-item list-group-item-dark">
 								<% if !message.opened? %>
-									<%= content_tag :span, "New Message",
-																	class: "badge badge-primary",
-																	id: "inbox-badge-#{message.id}" %>
+									<div id="inbox-badge-<%= message.id %>">
+										<span class="badge badge-primary">New Message</span>
+									</div>
 								<% end %>
 								Received: <%= format_time(message.created_at) %><br>
 								From: <%= link_to message.from_user.name, message.from_user %><br>
@@ -29,14 +29,10 @@
 									<%= "#{message.body[0..20]}" %>
 									<%= content_tag :span, message.body[21..-1],
 																	class: "collapse", id: "inbox-#{message.id}" %><br>
-
-									<%= form_for message, { url: open_message_path(message),
-																					method: :patch, remote: true } do |f| %>
-
-										<%= f.submit "More/Less", class: "btn btn-sm",
-																							data: { toggle: "collapse",
-																											target: "#inbox-#{message.id}" } %>
-									<% end  %>
+									<%= button_to "Open/Close", open_message_path(message),
+																method: :patch, remote: true, class: "btn btn-sm",
+																data: { toggle: "collapse",
+																				target: "#inbox-#{message.id}" } %>
 								</div>
 							</li>
 						<% end %>
@@ -65,7 +61,7 @@
 									<%= "#{message.body[0..20]}" %>
 									<%= content_tag :span, message.body[21..-1],
 																	class: "collapse", id: "sent-#{n}" %><br>
-									<%= content_tag :button, "Expand/Collapse", 
+									<%= content_tag :button, "Open/Close", 
 																	class: "btn btn-sm", data: { toggle: "collapse",
 																															 target: "#sent-#{n}" } %>
 								</div>
@@ -95,9 +91,9 @@
 							<% @outside.each do |message| %>
 								<li class="list-group-item list-group-item-dark">
 									<% if !message.opened? %>
-										<%= content_tag :span, "New Message",
-																		class: "badge badge-primary",
-																		id: "contact-badge-#{message.id}" %>
+										<div id="contact-badge-<%= message.id %>">
+											<span class="badge badge-primary">New Message</span>
+										</div>
 									<% end %>
 									Received: <%= format_time(message.created_at) %><br>
 									From: <%= "#{message.name}, #{message.email}" %><br>
@@ -105,15 +101,11 @@
 										<%= "#{message.body[0..20]}" %>
 										<%= content_tag :span, message.body[21..-1],
 																		class: "collapse", id: "contact-#{message.id}" %><br>
-										
-										<%= form_for message, { url: open_outside_message_path(message),
-																						method: :patch, remote: true } do |f| %>
-
-										<%= f.submit "More/Less", class: "btn btn-sm",
-																							data: { toggle: "collapse",
-																											target: "#contact-#{message.id}" } %>
-									<% end  %>
-								</div>
+										<%= button_to "Open/Close", open_outside_message_path(message),
+																	method: :patch, remote: true, class: "btn btn-sm",
+																	data: { toggle: "collapse",
+																					target: "#contact-#{message.id}" } %>
+									</div>
 								</li>
 							<% end %>
 						</ol>
