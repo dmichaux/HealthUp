@@ -10,8 +10,14 @@
 					<li class="nav-item"><%= link_to 'About', 	about_path, 							class: "nav-link" %></li>
 					<li class="nav-item"><%= link_to 'Contact', new_outside_message_path, class: "nav-link" %></li>
 					<% if logged_in? %>
-						<li class="nav-item"><%= link_to "My Account", current_user,
-																		 class: "nav-link" %></li>
+						<li class="nav-item dropdown">
+							<a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">My Account</a>
+							<div class="dropdown-menu">
+									<%= link_to "Profile", current_user, class: "dropdown-item" %>
+									<%= link_to "Messages", messages_user_path(current_user), class: "dropdown-item" %>
+									<%= link_to "Edit Information", edit_user_path(current_user), class: "dropdown-item" %>
+							</div>
+						</li>
 						<li class="nav-item"><%= link_to 'Log Out', logout_path,
 																		 method: :delete, class: "nav-link" %></li>
 					<% else %>
