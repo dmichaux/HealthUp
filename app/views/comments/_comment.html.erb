@@ -1,0 +1,10 @@
+<li id="comment-<%= comment.id %>" class="list-group-item list-group-item-dark">
+	<%= comment.body %><br>
+	<%= link_to comment.author.name, comment.author %>
+	<%= format_time(comment.created_at) %>
+	<% if (comment.author == current_user) || current_user.admin? %>
+		<br><%= button_to "delete", comment,
+											method: :delete, class: "btn-dark btn-sm",
+											data: { confirm: "delete comment?"} %>
+	<% end %>
+</li>
