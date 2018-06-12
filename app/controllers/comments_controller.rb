@@ -7,12 +7,14 @@ class CommentsController < ApplicationController
 		@post = Post.find(params[:comment][:post_id])
 		@cohort = Cohort.find(@post.cohort_id)
 		@comment = @post.comments.build(comment_params)
-		if @comment.save
-			flash[:success] = "Comment added"
-			redirect_to @cohort
-		else
-			flash.now[:danger] = "Error with comment. Expand post again for details."
-			render 'cohorts/show'
+		respond_to do |format|
+			if @comment.save
+				format.html { redirect_to @cohort, success: "Comment added" }
+				format.js
+			else
+				format.html { render 'cohorts/show',
+											danger: "Error with comment. Expand post again for details." }
+			end
 		end
 	end
 

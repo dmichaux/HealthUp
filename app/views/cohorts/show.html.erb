@@ -62,34 +62,23 @@
 									<div class="collapse" id="post-<%= post.id %>">
 										<%= post.body %>
 										<div>
-											<%= form_for @comment do |f| %>
+											<%= form_for @comment, remote: true do |f| %>
 
 												<%= render 'shared/error_messages', object: f.object %>
 
 												<%= f.hidden_field :post_id,	 value: post.id %>
 												<%= f.hidden_field :author_id, value: current_user.id %>
 
-												<%= f.text_area :body, class: "form-control",
+												<%= f.text_area :body, class: "form-control", id: "post-#{post.id}-comment-box",
 																							 placeholder: "comment on this post" %>
 
-												<%= f.submit "comment", class: "btn, btn-sm" %>
+												<%= f.submit "comment", class: "btn btn-sm" %>
 											<% end %>
 										</div>
 										<% if post.comments.any? %>
 											Comments:
-											<ol class="list-group">
-												<% post.comments.each do |comment| %>
-													<li class="list-group-item list-group-item-dark">
-														<%= comment.body %><br>
-														<%= link_to comment.author.name, comment.author %>
-														<%= format_time(comment.created_at) %>
-														<% if (comment.author == current_user) || current_user.admin? %>
-															<br><%= button_to "delete", comment,
-																								method: :delete, class: "btn-dark btn-sm",
-																								data: { confirm: "delete comment?"} %>
-														<% end %>
-													</li>
-												<% end %>
+											<ol id="post-<%= post.id %>-comments-list" class="list-group">
+												<%= render post.comments %>
 											</ol>
 										<% end %>
 									</div>
