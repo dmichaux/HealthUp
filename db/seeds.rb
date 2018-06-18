@@ -25,6 +25,12 @@ lorem = "Lorem ipsum dolor sit amet, consectetur adipisicing elit,
 	user.password = user.password_confirmation = "password"
 	user.save
 
+	# User Goals
+
+	3.times do |n|
+		user.goals.create(body: "Goal #{n + 1}: #{lorem[0..25]}")
+	end
+
 	# Cohorts
 
 	Cohort.create(name: "Cohort #{x}",
@@ -40,7 +46,7 @@ lorem = "Lorem ipsum dolor sit amet, consectetur adipisicing elit,
 	user.sent_messages.create(to_user_id: admin.id,
 														body: "Dear Admin. #{lorem}")
 
-	#Outside Messages
+	# Outside Messages
 
 	OutsideMessage.create(name: "Visitor #{x}", email: "Visitor#{x}@example.com",
 												to_admin_id: admin.id, body: "#{lorem}")
