@@ -35,4 +35,5 @@ Rails.application.routes.draw do
 	resources :password_resets,		  only: 	[:new, :create, :edit, :update]
 	resources :posts,								except: [:index, :show, :new]
 	resources :comments,						only: 	[:create, :destroy]
+	resources :user_goals, 					only: 	[:create, :destroy]
 end
