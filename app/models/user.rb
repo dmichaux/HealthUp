@@ -1,11 +1,12 @@
 class User < ApplicationRecord
 	attr_accessor :remember_token, :activation_token, :pass_reset_token
 
-  belongs_to :cohort, optional: true
+  belongs_to :cohort,            optional: true
   has_many   :sent_messages,     foreign_key: :from_user_id, class_name: "Message", dependent: :destroy
   has_many   :received_messages, foreign_key: :to_user_id,   class_name: "Message", dependent: :destroy
   has_many   :posts,             foreign_key: :author_id
   has_many   :comments,          foreign_key: :author_id, dependent: :destroy
+  has_many   :user_goals,        dependent: :destroy
 
   default_scope           -> { order(:name) }
   scope :only_deleted,    -> { where.not(deleted_at: nil) }
