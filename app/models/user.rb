@@ -6,7 +6,7 @@ class User < ApplicationRecord
   has_many   :received_messages, foreign_key: :to_user_id,   class_name: "Message", dependent: :destroy
   has_many   :posts,             foreign_key: :author_id
   has_many   :comments,          foreign_key: :author_id, dependent: :destroy
-  has_many   :user_goals,        dependent: :destroy
+  has_many   :goals,             class_name: "UserGoal",  dependent: :destroy
 
   default_scope           -> { order(:name) }
   scope :only_deleted,    -> { where.not(deleted_at: nil) }

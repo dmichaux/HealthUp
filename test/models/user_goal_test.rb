@@ -3,8 +3,8 @@ require 'test_helper'
 class UserGoalTest < ActiveSupport::TestCase
   
   def setup
-  	user = users(:adam)
-  	@goal = user.user_goals.build(body: "Goal 1 ...")
+  	user  = users(:adam)
+  	@goal = user.goals.build(body: "Goal 1 ...")
   end
 
   test "should be valid" do
