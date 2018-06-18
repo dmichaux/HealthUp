@@ -25,13 +25,26 @@
 					<%= f.hidden_field :to_user_id, value: @user.id %>
 					<%= f.text_area :body, class: "form-control",
 																 placeholder: "Send a message to #{@user.name}" %><br>
-					<%= f.submit "Send", class: "btn" %>
+					<%= f.submit "Send", class: "btn btn-sm" %>
 				<% end %>
 			<% end %>
 		</div>
 		<div class="col-1"></div>
 		<div class="col border border-secondary rounded">
 			[other useful space]
+			Goals:
+			<ol id="user-goals-list" class="list-group">
+				<% if @user.goals.any? %>
+					<%= render @user.goals %>
+				<% end %>
+			</ol>
+			<%= form_for :user_goal, url: user_goals_path, remote: true do |f| %>
+
+				<%= f.hidden_field :user_id, value: @user.id %>
+				<%= f.text_area :body, class: "form-control", id: "goal-box",
+															 placeholder: "Add a goal" %>
+				<%= f.submit "Add", class: "btn btn-sm" %>
+			<% end %>
 		</div>
 	</div>
 </div>
