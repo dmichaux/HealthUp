@@ -1,3 +1,7 @@
-<li class="list-group-item list-group-item-dark">
-	<%= user_goal.body %>
+<li class="list-group-item list-group-item-dark" id="user-goal-<%= user_goal.id %>">
+	<%= user_goal.body %><br>
+	<%= button_to "delete", user_goal_path(user_goal),
+													method: :delete, remote: true,
+													class: "btn-sm",
+													params: { user_id: user_goal.user_id } %>
 </li>
