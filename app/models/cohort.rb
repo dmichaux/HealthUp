@@ -2,6 +2,7 @@ class Cohort < ApplicationRecord
 
 	has_many :users, dependent: :nullify
 	has_many :posts, dependent: :destroy
+	has_many :goals, dependent: :destroy, class_name: "CohortGoal"
 
 	validates :name,				presence: true, length: { within: 3..25 }
 	validates :description, presence: true, length: { within: 3..500 }
