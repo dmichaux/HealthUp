@@ -6,11 +6,18 @@
 
 	<%= render "shared/error_messages", object: f.object %>
 	
-	<%= f.label :name %><br>
+	<%= f.label :name %>
 	<%= f.text_field :name, class: "form-control" %><br>
 
-	<%= f.label :description %><br>
+	<%= f.label :description %>
 	<%= f.text_area :description, class: "form-control" %><br>
+
+	<%= f.fields_for :goals do |goal_form| %>
+
+		<%= goal_form.label :body, "Cohort Goal" %>
+		<%= goal_form.text_field :body, class: "form-control" %><br>
+
+	<% end %>
 
 	<small>Leave dates blank to designate as "unspecified"</small><br>
 

@@ -12,6 +12,13 @@
 	<%= f.label :description %><br>
 	<%= f.text_area :description, class: "form-control" %><br>
 
+	<%= f.fields_for :goals do |goal_form| %>
+
+		<%= goal_form.label :body, "Cohort Goal" %>
+		<%= goal_form.text_field :body, class: "form-control" %><br>
+
+	<% end %>
+
 	<small>Leave dates blank to designate as "unspecified"</small><br>
 
 	<%= f.label :start_date %>
