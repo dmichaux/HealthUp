@@ -20,9 +20,4 @@ class CohortGoalTest < ActiveSupport::TestCase
   	@goal.body = "x" * 251
   	assert_not @goal.valid?
   end
-
-  test "cohort_id should be present" do
-  	@goal.cohort_id = nil
-  	assert_not @goal.valid?
-  end
 end
