@@ -15,6 +15,15 @@ class UserGoalsController < ApplicationController
 		end
 	end
 
+	def destroy
+		@goal = UserGoal.find(params[:id])
+		@goal.destroy
+		respond_to do |format|
+			format.html { redirect_to @user }
+			format.js
+		end
+	end
+
 	private
 
 	def goal_params
@@ -24,7 +33,7 @@ class UserGoalsController < ApplicationController
 	# Before Filter
 
 	def require_current_user
-		@user = User.find(params[:user_goal][:user_id])
+		@user = User.find(params[:user_id])
 		redirect_to root_path unless current_user?(@user)
 	end
 end
