@@ -16,6 +16,7 @@ class CohortsController < ApplicationController
 
 	def new
 		@cohort = Cohort.new
+		2.times { @cohort.goals.build }
 	end
 
 	def create
@@ -62,7 +63,8 @@ class CohortsController < ApplicationController
 	private
 
 	def cohort_params
-		params.require(:cohort).permit(:name, :description, :start_date, :end_date)
+		params.require(:cohort).permit(:name, :description, :start_date, :end_date,
+																	 goals_attributes: [:id, :body])
 	end
 
 	#Before Filters
