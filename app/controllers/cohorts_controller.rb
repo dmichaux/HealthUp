@@ -6,7 +6,7 @@ class CohortsController < ApplicationController
 	before_action :forbid_user_reassignment,		 only: 	 :add_users
 
 	def index
-		@cohorts = Cohort.all
+		@cohorts = Cohort.order(:name)
 	end
 
 	def show
