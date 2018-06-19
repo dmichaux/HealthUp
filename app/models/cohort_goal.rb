@@ -1,0 +1,2 @@
+class CohortGoal < ApplicationRecord
+end
