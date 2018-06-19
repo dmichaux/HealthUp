@@ -6,6 +6,15 @@
 			<ul>
 				<li>Name: <%= @cohort.name %></li>
 				<li>Description: <%= @cohort.description %></li>
+				<% if @cohort.goals.any? %>
+					<li>Goals:
+						<ol>
+							<% @cohort.goals.each do |goal| %>
+								<li><%= goal.body %></li>
+							<% end %>
+						</ol>
+					</li>
+				<% end %>
 				<li>Starts: <%= @cohort.starts %></li>
 				<li>Ends: <%= @cohort.ends %></li>
 				<% if current_user.admin? %>

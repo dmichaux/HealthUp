@@ -31,8 +31,13 @@
 		</div>
 		<div class="col-1"></div>
 		<div class="col border border-secondary rounded">
-			[other useful space]
-			Goals:
+			<% if @user.cohort %>
+				Cohort Goals:<br>
+				<ol class="list-group">
+					<%= render @user.cohort.goals %>
+				</ol><br>
+			<% end %>
+			Personal Goals:
 			<ol id="user-goals-list" class="list-group">
 				<% if @user.goals.any? %>
 					<%= render @user.goals %>
@@ -42,7 +47,7 @@
 
 				<%= hidden_field_tag :user_id, @user.id %>
 				<%= f.text_area :body, class: "form-control", id: "goal-box",
-															 placeholder: "Add a goal" %>
+															 placeholder: "Add a personal goal" %>
 				<%= f.submit "Add", class: "btn btn-sm" %>
 			<% end %>
 		</div>
