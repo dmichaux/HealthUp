@@ -1,13 +1,6 @@
-<h1>Add New Client</h1>
+<% provide :title, 			 "New User" %>
+<% provide :button_text, "Invite Client" %>
 
-<%= form_for @user do |f| %>
-	<%= render "shared/error_messages", object: f.object %>
-	
-	<%= f.label 		 :name %>
-	<%= f.text_field :name, class: "form-control" %>
+<h1>Invite New Client</h1>
 
-	<%= f.label 			:email %>
-	<%= f.email_field :email, class: "form-control" %><br>
-
-	<%= f.submit "Invite Client", class: "btn" %>
-<% end %>
+<%= render "form" %>

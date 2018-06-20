@@ -1,22 +1,6 @@
-<% provide :title, "Edit User" %>
+<% provide :title,       "Edit" %>
+<% provide :button_text, "Update" %>
 
-<h1>Edit User</h1>
+<h1>Edit My Information</h1>
 
-<%= form_for(@user) do |f| %>
-
-  <%= render 'shared/error_messages', object: f.object %>
-
-  <%= f.label :name %>
-  <%= f.text_field :name, class: 'form-control' %>
-
-  <%= f.label :email %>
-  <%= f.email_field :email, class: 'form-control' %>
-
-  <%= f.label :password %>
-  <%= f.password_field :password, class: 'form-control' %>
-
-  <%= f.label :password_confirmation, "Confirm Password" %>
-  <%= f.password_field :password_confirmation, class: 'form-control' %>
-
-  <%= f.submit "Update Information", class: "btn" %>
-<% end %>
+<%= render "form", edit: true %>
