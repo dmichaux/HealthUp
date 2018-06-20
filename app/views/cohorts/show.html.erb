@@ -36,50 +36,7 @@
 		<div class="col border border-secondary rounded">
 			<% if @cohort.posts.any? %>
 				<ol class="list-group">
-					<% @cohort.posts.each do |post| %>
-						<li class="list-group-item list-group-item-dark">
-							<div>
-								<%= content_tag :a, post.title,
-																href: "#",
-																data: { toggle: "collapse",
-																				target: "#post-#{post.id}" } %>
-								<div>
-									Posted by <%= link_to post.author.name, post.author %>
-									<%= format_time(post.created_at) %>
-									<% if current_user.admin? %>
-										<br><%= button_to "edit", edit_post_path(post),
-																			method: :get, class: "btn-secondary btn-sm" %>
-										<%= button_to "delete", post,
-																	method: :delete, class: "btn-dark btn-sm",
-																	data: { confirm: "Are you sure?" } %>
-									<% end %>
-									<div class="collapse" id="post-<%= post.id %>">
-										<%= post.body %>
-										<div>
-											<%= form_for @comment, remote: true do |f| %>
-
-												<%= render 'shared/error_messages', object: f.object %>
-
-												<%= f.hidden_field :post_id,	 value: post.id %>
-												<%= f.hidden_field :author_id, value: current_user.id %>
-
-												<%= f.text_area :body, class: "form-control", id: "post-#{post.id}-comment-box",
-																							 placeholder: "comment on this post" %>
-
-												<%= f.submit "comment", class: "btn btn-sm" %>
-											<% end %>
-										</div>
-										<% if post.comments.any? %>
-											Comments:
-											<ol id="post-<%= post.id %>-comments-list" class="list-group">
-												<%= render post.comments %>
-											</ol>
-										<% end %>
-									</div>
-								</div>
-							</div>
-						</li>
-					<% end %>
+					<%= render @cohort.posts %>
 				</ol>
 			<% end %>
 			<% if current_user.admin %>
