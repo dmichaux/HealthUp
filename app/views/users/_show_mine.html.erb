@@ -1,0 +1,34 @@
+<div class="container">
+	<div class="row">
+		<div class="col">
+				My Cohort: <%= @user.cohort ? (link_to @user.cohort.name, @user.cohort) :
+																			"currently unassigned" %><br>
+				<%= link_to "My Messages", messages_user_path(@user) %> 
+				<% if @new_messages > 0 %>
+      		<span class="badge badge-primary"><%= @new_messages %> New</span>
+      	<% end %>
+		</div>
+		<div class="col-1"></div>
+		<div class="col border border-secondary rounded">
+			<% if @user.cohort %>
+				Cohort Goals:<br>
+				<ol class="list-group">
+					<%= render @user.cohort.goals %>
+				</ol><br>
+			<% end %>
+			Personal Goals:
+			<ol id="user-goals-list" class="list-group">
+				<% if @user.goals.any? %>
+					<%= render @user.goals %>
+				<% end %>
+			</ol>
+			<%= form_for :user_goal, url: user_goals_path, remote: true do |f| %>
+
+				<%= hidden_field_tag :user_id, @user.id %>
+				<%= f.text_area :body, class: "form-control", id: "goal-box",
+															 placeholder: "Add a personal goal" %>
+				<%= f.submit "Add", class: "btn btn-sm" %>
+			<% end %>
+		</div>
+	</div>
+</div>

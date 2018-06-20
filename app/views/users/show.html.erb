@@ -1,56 +1,9 @@
-<h1>User Account Profile</h1>
+<% provide :title, "#{@user.name}" %>
 
-<div class="container">
-	<div class="row">
-		<div class="col">
-			<p>
-				Name: <%= @user.name %><br>
-				Email: <%= @user.email %><br>
-				Cohort: <%= @user.cohort ? (link_to @user.cohort.name, @user.cohort) :
-																				"unassigned" %><br>
-				Admin: <%= @user.admin? %><br>
-			</p>
+<h1><%= @user.name %></h1>
 
-			<% if current_user?(@user) %>
-				<%= link_to "My Messages", messages_user_path(@user) %> 
-				<% if @new_messages > 0 %>
-      		<span class="badge badge-primary"><%= @new_messages %> New</span>
-      	<% end %>
-				<br><%= link_to "Edit My Information", edit_user_path(@user) %>
-			<% else %>
-				<%= form_for @message do |f| %>
-
-					<%= render "shared/error_messages", object: f.object %>
-
-					<%= f.hidden_field :to_user_id, value: @user.id %>
-					<%= f.text_area :body, class: "form-control",
-																 placeholder: "Send a message to #{@user.name}" %><br>
-					<%= f.submit "Send", class: "btn btn-sm" %>
-				<% end %>
-			<% end %>
-		</div>
-		<div class="col-1"></div>
-		<div class="col border border-secondary rounded">
-			<% if @user.cohort %>
-				Cohort Goals:<br>
-				<ol class="list-group">
-					<%= render @user.cohort.goals %>
-				</ol><br>
-			<% end %>
-			Personal Goals:
-			<ol id="user-goals-list" class="list-group">
-				<% if @user.goals.any? %>
-					<%= render @user.goals %>
-				<% end %>
-			</ol>
-			<%= form_for :user_goal, url: user_goals_path, remote: true do |f| %>
-
-				<%= hidden_field_tag :user_id, @user.id %>
-				<%= f.text_area :body, class: "form-control", id: "goal-box",
-															 placeholder: "Add a personal goal" %>
-				<%= f.submit "Add", class: "btn btn-sm" %>
-			<% end %>
-		</div>
-	</div>
-</div>
-
+<% if current_user?(@user) %>
+	<%= render "show_mine" %>
+<% else %>
+	<%= render "users/show_other" %>
+<% end %>
