@@ -1,0 +1,42 @@
+<li class="list-group-item list-group-item-dark">
+
+	<!-- Cohorts#show -->
+	<% if local_assigns[:participant] %>
+		<%= link_to user.name, user %>
+		<% if current_user.admin? %>
+			<%= button_to "remove from cohort", unassign_cohort_user_path(user),
+										method: :patch, class: "btn-secondary btn-sm" %>
+		<% end %>
+
+	<!-- Users#Index Active -->
+	<% elsif local_assigns[:active] %>
+		<%= link_to user.name, user %>
+		<br>Cohort: <%= user.cohort ? (link_to user.cohort.name, user.cohort) :
+																	"unassigned" %><br>
+		Active since <%= format_time(user.activated_at) %><br>
+		<% if !user.admin? %> 
+			<%=button_to "delete client", soft_delete_user_path(user),
+										method: :patch, class: "btn-secondary btn-sm",
+										data: { confirm: "Mark user for deletion?" } %>
+		<% end %>
+
+	<!-- Users#Index Deleted -->
+	<% elsif local_assigns[:deleted] %>
+		<%= user.name %> was deleted <%= format_time(user.deleted_at) %>
+		<%= button_to "reactivate", reactivate_user_path(user),
+									method: :patch, class: "btn-secondary btn-sm",
+									data: { confirm: "Send client a reactivation email?" } %>
+		<%= button_to "permanently delete", user,
+									method: :delete, class: "btn-dark btn-sm",
+									data: { confirm: "Permanently erase all information for this client?" } %>
+
+	<!-- Users#Index Inactive -->
+	<% elsif local_assigns[:inactive] %>
+		<%= user.name %> was invited <%= format_time(user.created_at) %>
+		<% if !user.admin? %> 
+			<%=button_to "delete client", user,
+										method: :delete, class: "btn-dark btn-sm",
+										data: { confirm: "Are you sure?" } %>
+		<% end %>
+	<% end %>
+</li>
