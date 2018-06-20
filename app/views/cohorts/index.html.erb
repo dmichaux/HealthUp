@@ -1,20 +1,13 @@
-<h1>Cohort index</h1>
+<% provide :title, "Cohorts" %>
+
+<h1>All Cohorts</h1>
 
 <% if @cohorts.any? %>
-	<ul class="list-group">
-		<% @cohorts.each do |cohort| %>
-			<li class="list-group-item list-group-item-dark">
-				Name: <%= link_to cohort.name, cohort %><br>
-				Description: <%= cohort.description %><br>
-				Starts: <%= cohort.starts %><br>
-				Ends: <%= cohort.ends %><br>
-				<%= button_to "delete", cohort,
-											method: :delete, class: "btn-dark btn-sm",
-											data: { confirm: "Are you sure?"} %>
-			</li>
-		<% end %>
-	</ul>
+	<ol class="list-group">
+		<%= render @cohorts %>
+	</ol>
 <% else %>
-	None<br>
-	<%= link_to "New Cohort", new_cohort_path %>
+	<p>
+		No cohorts at this time. <%= link_to "Create New Cohort", new_cohort_path %>
+	</p>
 <% end %>

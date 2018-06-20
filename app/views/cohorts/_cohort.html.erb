@@ -1,0 +1,8 @@
+<li class="list-group-item list-group-item-dark">
+	<%= link_to cohort.name, cohort %><br>
+	Timeframe: <%= cohort.starts %> to <%= cohort.ends %><br>
+	Description: <%= cohort.description %><br>
+	<%= button_to "delete", cohort,
+								method: :delete, class: "btn-dark btn-sm",
+								data: { confirm: "Are you sure?"} %>
+</li>
