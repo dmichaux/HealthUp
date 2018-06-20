@@ -11,6 +11,7 @@ class PostsController < ApplicationController
 			redirect_to @cohort
 		else
 			flash.now[:warning] = "Error with post. Expand 'New Post' form for details."
+			@comment = Comment.new
 			render 'cohorts/show'
 		end
 	end
