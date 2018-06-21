@@ -1,0 +1,35 @@
+<li class="list-group-item list-group-item-dark">
+
+	<!-- New Message Badge -->
+	<% if (box == "inbox") && !message.opened? %>
+		<div id="<%= box %>-badge-<%= message.id %>">
+			<span class="badge badge-primary">New Message</span>
+		</div>
+	<% end %>
+
+	<!-- Message Data -->
+	<% if box == "inbox" %>
+		From <%= link_to message.from_user.name, message.from_user %> 
+	<% else %>
+		To <%= link_to message.to_user.name, message.to_user %> 
+	<% end %>
+	on <%= format_time(message.created_at) %>
+
+	<!-- Message Body -->
+	<div>
+		<%= "#{message.body[0..20]}" %>
+		<%= content_tag :span, message.body[21..-1],
+										class: "collapse", id: "#{box}-#{message.id}" %>
+		<% if box == "inbox" %>
+			<%= button_to "Open/Close", open_message_path(message),
+										method: :patch, remote: true, class: "btn-sm",
+										data: { toggle: "collapse",
+														target: "#inbox-#{message.id}" } %>
+		<% else %>
+			<br><%= content_tag :button, "Open/Close", 
+													class: "btn btn-sm",
+													data: { toggle: "collapse",
+																	target: "#sent-#{message.id}" } %> 
+		<% end %>
+	</div>
+</li>

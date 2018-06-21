@@ -1,0 +1,24 @@
+<li class="list-group-item list-group-item-dark">
+
+	<!-- New Message Badge -->
+	<% if !outside_message.opened? %>
+		<div id="contact-badge-<%= outside_message.id %>">
+			<span class="badge badge-primary">New Message</span>
+		</div>
+	<% end %>
+
+	<!-- Message Data -->
+		From <%= "#{outside_message.name}, #{outside_message.email}" %> 
+		on <%= format_time(outside_message.created_at) %>
+
+	<!-- Message Body -->
+	<div>
+		<%= "#{outside_message.body[0..20]}" %>
+		<%= content_tag :span, outside_message.body[21..-1],
+										class: "collapse", id: "contact-#{outside_message.id}" %>
+		<%= button_to "Open/Close", open_outside_message_path(outside_message),
+									method: :patch, remote: true, class: "btn-sm",
+									data: { toggle: "collapse",
+													target: "#contact-#{outside_message.id}" } %> 
+	</div>
+</li>

@@ -1,119 +1,23 @@
 <% provide :title, "Messages" %>
 
-<h1>Your Messages</h1>
+<h1>My Messages</h1>
 
 <div id="accordion">
-  <div class="card">
-    <div class="card-header">
-      <a class="card-link" data-toggle="collapse" href="#collapseOne">
-        Inbox 
-      </a>
-      <% if @received_unopened > 0 %>
-      	<span id="inbox-badge" class="badge badge-primary"><%= @received_unopened %> New</span>
-      <% end %>
-    </div>
-    <div id="collapseOne" class="collapse" data-parent="#accordion">
-      <div class="card-body">
-        <% if @received.any? %>
-					<ol class="list-group">
-						<% @received.each do |message| %>
-							<li class="list-group-item list-group-item-dark">
-								<% if !message.opened? %>
-									<div id="inbox-badge-<%= message.id %>">
-										<span class="badge badge-primary">New Message</span>
-									</div>
-								<% end %>
-								Received: <%= format_time(message.created_at) %><br>
-								From: <%= link_to message.from_user.name, message.from_user %><br>
-								<div>
-									<%= "#{message.body[0..20]}" %>
-									<%= content_tag :span, message.body[21..-1],
-																	class: "collapse", id: "inbox-#{message.id}" %><br>
-									<%= button_to "Open/Close", open_message_path(message),
-																method: :patch, remote: true, class: "btn btn-sm",
-																data: { toggle: "collapse",
-																				target: "#inbox-#{message.id}" } %>
-								</div>
-							</li>
-						<% end %>
-					</ol>
-				<% else %>
-					No messages
-				<% end %>
-      </div>
-    </div>
-  </div>
-  <div class="card">
-    <div class="card-header">
-      <a class="collapsed card-link" data-toggle="collapse" href="#collapseTwo">
-      Sent
-    </a>
-    </div>
-    <div id="collapseTwo" class="collapse" data-parent="#accordion">
-      <div class="card-body">
-        <% if @sent.any? %>
-					<ol class="list-group">
-						<% @sent.each_with_index do |message, n| %>
-							<li class="list-group-item list-group-item-dark">
-								Sent: <%= format_time(message.created_at) %><br>
-								To: <%= link_to message.to_user.name, message.to_user %><br>
-								<div>
-									<%= "#{message.body[0..20]}" %>
-									<%= content_tag :span, message.body[21..-1],
-																	class: "collapse", id: "sent-#{n}" %><br>
-									<%= content_tag :button, "Open/Close", 
-																	class: "btn btn-sm", data: { toggle: "collapse",
-																															 target: "#sent-#{n}" } %>
-								</div>
-							</li>
-						<% end %>
-					</ol>
-				<% else %>
-					No Messages
-				<% end %>
-      </div>
-    </div>
-  </div>
+
+	<!-- Inbox -->
+  <%= render partial: 	"message_box",
+  											locals: { messages: @received, unopened_count: @received_unopened,
+  											box: "inbox", a_class: "card-link", collapse_num: "collapseOne" } %>
+
+	<!-- Sent -->
+  <%= render partial: 	"message_box",
+  											locals: { messages: @sent,
+  											box: "sent", a_class: "card-link collapsed", collapse_num: "collapseTwo" } %>
+
+	<!-- Contact -->
   <% if @user.admin? %>
-	  <div class="card">
-	    <div class="card-header">
-	      <a class="collapsed card-link" data-toggle="collapse" href="#collapseThree">
-	        Contact Submissions
-	      </a>
-	      <% if @outside_unopened > 0 %>
-      		<span id="contact-badge" class="badge badge-primary"><%= @outside_unopened %> New</span>
-      	<% end %>
-	    </div>
-	    <div id="collapseThree" class="collapse" data-parent="#accordion">
-	      <div class="card-body">
-	        <% if @outside.any? %>
-						<ol class="list-group">
-							<% @outside.each do |message| %>
-								<li class="list-group-item list-group-item-dark">
-									<% if !message.opened? %>
-										<div id="contact-badge-<%= message.id %>">
-											<span class="badge badge-primary">New Message</span>
-										</div>
-									<% end %>
-									Received: <%= format_time(message.created_at) %><br>
-									From: <%= "#{message.name}, #{message.email}" %><br>
-									<div>
-										<%= "#{message.body[0..20]}" %>
-										<%= content_tag :span, message.body[21..-1],
-																		class: "collapse", id: "contact-#{message.id}" %><br>
-										<%= button_to "Open/Close", open_outside_message_path(message),
-																	method: :patch, remote: true, class: "btn btn-sm",
-																	data: { toggle: "collapse",
-																					target: "#contact-#{message.id}" } %>
-									</div>
-								</li>
-							<% end %>
-						</ol>
-					<% else %>
-						No Messages
-					<% end %>
-	      </div>
-	    </div>
-	  </div>
-	 <% end %>
+  	<%= render partial: "message_box",
+  											locals: { messages: @outside,  unopened_count: @outside_unopened,
+  											box: "contact", a_class: "card-link collapsed", collapse_num: "collapseThree" } %>
+	<% end %>
 </div>

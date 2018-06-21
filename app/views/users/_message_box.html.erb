@@ -1,0 +1,23 @@
+<div class="card">
+  <div class="card-header">
+    <a class="<%= a_class %>" data-toggle="collapse" href="#<%= collapse_num %>">
+      <%= box.capitalize %> 
+    </a>
+    
+    <% if (box != "sent") && (unopened_count > 0) %>
+	    <span id="<%= box %>-badge" class="badge badge-primary"><%= unopened_count %> New</span>
+    <% end %>
+  
+  </div>
+  <div id="<%= collapse_num %>" class="collapse" data-parent="#accordion">
+    <div class="card-body">
+      <% if messages.any? %>
+				<ol class="list-group">
+					<%= render messages, box: box %>
+				</ol>
+			<% else %>
+				No messages
+			<% end %>
+    </div>
+  </div>
+</div>
