@@ -24,7 +24,13 @@ class User < ApplicationRecord
 										uniqueness: { case_sensitive: false}
 
 	has_secure_password
-	validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
+  # Password must have at least one lower alpha, one upper alpha, and one number
+  VALID_PASSWORD_REGEX = /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])./
+	validates :password, presence: true, length: { within: 6..40 },
+                       format: { with: VALID_PASSWORD_REGEX,
+                                 message: "must have at least one lowercase letter,
+                                           one uppercase letter, and one number" },
+                       allow_nil: true
 
 	# Returns the hash digest of the given string.
   def self.digest(string)
