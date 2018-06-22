@@ -4,20 +4,22 @@ class UserGoalsController < ApplicationController
 	before_action :require_current_user
 
 	def create
-		@goal = @user.goals.build(goal_params)
+		@user_goal = @user.goals.build(goal_params)
 		respond_to do |format|
-			if @goal.save
+			if @user_goal.save
 				format.html { redirect_to @user }
 				format.js
 			else
-				format.html { render 'users/show', danger: 'Invalid goal' }
+				@user.goals.delete(@user_goal)
+				@new_message_count = @user.new_message_count
+				format.html { render 'users/show' }
 			end
 		end
 	end
 
 	def destroy
-		@goal = UserGoal.find(params[:id])
-		@goal.destroy
+		@user_goal = UserGoal.find(params[:id])
+		@user_goal.destroy
 		respond_to do |format|
 			format.html { redirect_to @user }
 			format.js
