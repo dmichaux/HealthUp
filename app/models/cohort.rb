@@ -24,4 +24,11 @@ class Cohort < ApplicationRecord
 			"unspecified"
 		end
 	end
+
+	# Sends a message to all cohort participants
+	def notify_participants(message, author_id)
+		self.users.each do |user|
+			Message.create(body: message, to_user_id: user.id, from_user_id: author_id)
+		end
+	end
 end
