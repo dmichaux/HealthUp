@@ -102,6 +102,13 @@ class User < ApplicationRecord
     send_activation_email
   end
 
+  # Returns a count of unopened messages
+  def new_message_count
+    count  = Message.where(to_user_id: self.id).where(opened: false).count
+    count += OutsideMessage.where(opened: false).count if self.admin?
+    count
+  end
+
 	private
 
 	def downcase_email
