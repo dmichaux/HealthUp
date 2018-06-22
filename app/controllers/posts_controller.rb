@@ -7,6 +7,8 @@ class PostsController < ApplicationController
 		@cohort = Cohort.find(params[:post][:cohort_id])
 		@post = Post.new(post_params_create)
 		if @post.save
+			@cohort.notify_participants("There's a new post on your cohort page!",
+																	params[:post][:author_id].to_i)
 			flash[:success] = "Post has been created"
 			redirect_to @cohort
 		else
