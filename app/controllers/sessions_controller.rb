@@ -11,9 +11,12 @@ class SessionsController < ApplicationController
 				params[:session][:remember_me] == "1" ? remember(user) : forget(user)
 				flash[:success] = "Login Successful"
 				redirect_to user
+			else
+				flash.now[:danger] = "Invalid login credentials"
+				render :new
 			end
 		else
-			flash.now[:danger] = "Invalid or Inactive Account"
+			flash.now[:danger] = "Inactive Account"
 			render :new
 		end
 	end
