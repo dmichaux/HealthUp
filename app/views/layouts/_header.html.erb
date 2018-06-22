@@ -14,6 +14,7 @@
 							<a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">My Account</a>
 							<div class="dropdown-menu">
 									<%= link_to "Profile", current_user, class: "dropdown-item" %>
+									<%= link_to "Cohort", current_user.cohort, class: "dropdown-item" if current_user.cohort %> 
 									<%= link_to "Messages", messages_user_path(current_user), class: "dropdown-item" %>
 									<%= link_to "Edit Information", edit_user_path(current_user), class: "dropdown-item" %>
 							</div>
