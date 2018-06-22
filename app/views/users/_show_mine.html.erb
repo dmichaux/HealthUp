@@ -4,8 +4,8 @@
 				My Cohort: <%= @user.cohort ? (link_to @user.cohort.name, @user.cohort) :
 																			"currently unassigned" %><br>
 				<%= link_to "My Messages", messages_user_path(@user) %> 
-				<% if @new_messages > 0 %>
-      		<span class="badge badge-primary"><%= @new_messages %> New</span>
+				<% if @new_message_count > 0 %>
+      		<span class="badge badge-primary"><%= @new_message_count %> New</span>
       	<% end %>
 		</div>
 		<div class="col-1"></div>
@@ -22,7 +22,7 @@
 					<%= render @user.goals %>
 				<% end %>
 			</ol>
-			<%= form_for :user_goal, url: user_goals_path, remote: true do |f| %>
+			<%= form_for @user_goal, remote: true do |f| %>
 
 				<%= hidden_field_tag :user_id, @user.id %>
 				<%= f.text_area :body, class: "form-control", id: "goal-box",
