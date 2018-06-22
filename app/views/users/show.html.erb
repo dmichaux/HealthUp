@@ -3,7 +3,7 @@
 <h1><%= @user.name %></h1>
 
 <% if current_user?(@user) %>
-	<%= render "show_mine" %>
+	<%= render "users/show_mine" %>
 <% else %>
 	<%= render "users/show_other" %>
 <% end %>
