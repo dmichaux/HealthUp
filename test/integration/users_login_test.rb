@@ -21,14 +21,14 @@ class UsersLoginTest < ActionDispatch::IntegrationTest
 	test "login before account is active" do
 		@user.toggle!(:activated)
 		post login_path, params: {session: { email: 	 @user.email,
-																				 password: 'password' } }
+																				 password: 'Password1' } }
 		assert_not is_logged_in?
 	end
 
 	test "login with valid credentials, followed by logout" do
 		get login_path
 		post login_path, params: {session: { email: 	 @user.email,
-																				 password: 'password' } }
+																				 password: 'Password1' } }
 		assert is_logged_in?
 		assert_redirected_to @user
 		follow_redirect!

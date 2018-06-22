@@ -7,7 +7,7 @@ class UserEditingTest < ActionDispatch::IntegrationTest
   	log_in_as @user
   	@new_name  = "New Name"
   	@new_email = "new@example.com"
-  	@new_pass  = "newpass1"
+  	@new_pass  = "NewPassword2"
   end
 
   test "cannot edit another user" do
@@ -70,10 +70,10 @@ class UserEditingTest < ActionDispatch::IntegrationTest
 
   test "mismatched (invalid) password only" do
   	patch user_path(@user), params: { user: { password: 						 @new_pass,
-  																						password_confirmation: "differentpass" } }
+  																						password_confirmation: "DifferentPass7" } }
   	assert_equal @user.password_digest, @user.reload.password_digest
   	assert_not @user.authenticate(@new_pass)
-  	assert_not @user.authenticate("differentpass")
+  	assert_not @user.authenticate("DifferentPass7")
   	assert_template "users/edit"
 		assert_select "div.text-danger"
   end
@@ -81,12 +81,12 @@ class UserEditingTest < ActionDispatch::IntegrationTest
   test "name, email, and mismatched (invalid) password" do
   	patch user_path(@user), params: { user: { name: @new_name, email: @new_email,
   																						password: 						  @new_pass,
-  																						password_confirmation:  "differentpass" } }
+  																						password_confirmation:  "DifferentPass7" } }
   	assert_equal @user.password_digest, @user.reload.password_digest
   	assert_not_equal @new_name, @user.name
   	assert_not_equal @new_email, @user.email
   	assert_not @user.authenticate(@new_pass)
-  	assert_not @user.authenticate("differentpass")
+  	assert_not @user.authenticate("DifferentPass7")
   	assert_template "users/edit"
 		assert_select "div.text-danger"
   end

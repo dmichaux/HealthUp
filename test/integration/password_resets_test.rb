@@ -22,8 +22,8 @@ class PasswordResetsTest < ActionDispatch::IntegrationTest
 		user.update_attribute(:reset_sent_at, 3.hours.ago)
 		patch password_reset_path(user.pass_reset_token),
 															params: { email: user.email,
-																				user: { password: "newpassword",
-																								password_confirmation: "newpassword" }}
+																				user: { password: "NewPassword2",
+																								password_confirmation: "NewPassword2" }}
 		assert_redirected_to new_password_reset_path
 		follow_redirect!
 		assert_match /expired/i, response.body
@@ -57,20 +57,20 @@ class PasswordResetsTest < ActionDispatch::IntegrationTest
 		# Invalid password and confirmation
 		patch password_reset_path(user.pass_reset_token),
 															params: { email: user.email,
-																				user: { password: "thesepasswords",
-																								password_confirmation: "donotmatch" }}
+																				user: { password: "These2Passwords",
+																								password_confirmation: "DoNotMatch1" }}
 		assert_template "password_resets/edit"
 		# Empty password
 		patch password_reset_path(user.pass_reset_token),
 															params: { email: user.email,
 																				user: { password: "",
-																								password_confirmation: "wheresthepass" }}
+																								password_confirmation: "WheresThe1Pass" }}
 		assert_template "password_resets/edit"
 		# Valid password and confirmation
 		patch password_reset_path(user.pass_reset_token),
 															params: { email: user.email,
-																				user: { password: "newpassword",
-																								password_confirmation: "newpassword" }}
+																				user: { password: "NewPassword2",
+																								password_confirmation: "NewPassword2" }}
 		assert is_logged_in?
 		assert_nil user.reload.reset_digest
 		assert_redirected_to user

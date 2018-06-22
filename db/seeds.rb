@@ -8,7 +8,7 @@ end
 
 admin = User.create(name: "Admin", email: "admin@example.com", admin: true,
 										activated: true, activated_at: 1.year.ago)
-admin.password = admin.password_confirmation = "password"
+admin.password = admin.password_confirmation = "Password1"
 admin.save
 
 User.create(name: "Uncactivated User", email: "inactive@example.com")
@@ -22,7 +22,7 @@ lorem = "Lorem ipsum dolor sit amet, consectetur adipisicing elit,
 
 	user = User.create(name: "Test #{x}", email: "test#{x}@example.com",
 										 activated: true, activated_at: Time.zone.now)
-	user.password = user.password_confirmation = "password"
+	user.password = user.password_confirmation = "Password1"
 	user.save
 
 	# User Goals
