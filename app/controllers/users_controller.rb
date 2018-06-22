@@ -14,8 +14,8 @@ class UsersController < ApplicationController
 	def show
 		@user = User.find(params[:id])
 		if current_user?(@user)
-			@new_messages  = Message.where(to_user_id: @user.id).where(opened: false).count
-			@new_messages += OutsideMessage.where(opened: false).count if @user.admin?
+			@user_goal 		 			= UserGoal.new
+			@new_message_count  = @user.new_message_count
 		else
 			@message = Message.new
 		end
