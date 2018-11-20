@@ -3,7 +3,7 @@ require 'test_helper'
 class StaticPagesControllerTest < ActionDispatch::IntegrationTest
 
 	def setup
-		@site_name = "Website Name"
+		@site_name = "HealthUp"
 	end
 
 	test "should get home" do

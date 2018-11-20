@@ -2,21 +2,26 @@
 
 <h1>Contact Us</h1>
 
-<%= form_for @outside_message do |f| %>
+<div class="row">
+	<div class="col">
+		<%= form_for @outside_message do |f| %>
 
-	<%= render "shared/error_messages", object: f.object %>
+			<%= render "shared/error_messages", object: f.object %>
 
-	<small>* all fields are required *</small><br>
+			<small>* all fields are required *</small><br>
 
-	<%= f.label :name, "Your Name" %><br>
-	<%= f.text_field :name, class: "form-control" %><br>
+			<%= f.label :name, "Your Name" %><br>
+			<%= f.text_field :name, class: "form-control" %><br>
 
-	<%= f.label :email, "Your email" %><br>
-	<%= f.email_field :email, class: "form-control" %><br>
+			<%= f.label :email, "Your email" %><br>
+			<%= f.email_field :email, class: "form-control" %><br>
 
-	<%= f.label :body, "Message" %><br>
-	<%= f.text_area :body, class: "form-control",
-												 placeholder: "Your message here..." %><br>
+			<%= f.label :body, "Message" %><br>
+			<%= f.text_area :body, class: "form-control",
+														 placeholder: "Your message here..." %><br>
 
-	<%= f.submit "Send", class: "btn" %>
-<% end %>
+			<%= f.submit "Send", class: "btn" %>
+		<% end %>
+	</div>
+	<div class="col"></div>
+</div>
